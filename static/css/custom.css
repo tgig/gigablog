@@ -1,0 +1,115 @@
+/*
+ * Globals
+ */
+
+/* Links */
+a,
+a:focus,
+a:hover {
+    color: #4d4d4d;
+}
+
+/* Headers */
+h1, h2, h3, h4, h5 {
+    font-family: 'Roboto Slab', sans-serif;
+}
+h1 {
+    text-align: center;
+    margin-bottom: 40px;
+    font-weight: 100;
+}
+h5 {
+    margin-top: .5rem;
+}
+
+/*
+ * Base structure
+ */
+
+html,
+body {
+    height: 100%;
+    background-color: #f2f2f2;
+}
+
+body {
+    display: -ms-flexbox;
+    display: -webkit-box;
+    display: flex;
+    color: #4d4d4d;
+    font-family: "Raleway", sans-serif;
+}
+
+.cover-container {
+    width: 42em;
+}
+
+
+.cover-container img {
+    max-width: 100%;
+}
+
+.landscape {
+    margin-left: calc(50% - 55vw);
+    margin-right: calc(50% - 55vw);
+}
+
+/*
+ * Header
+ */
+ .masthead-brand {
+    color: #e84a45;
+ }
+
+@media (max-width: 47.9em) {
+    .masthead {
+        margin-bottom: 50px;
+    }
+}
+@media (min-width: 48em) {
+    .masthead {
+        margin-bottom: 100px;
+    }
+    .masthead-brand {
+        float: left;
+    }
+    .nav-masthead {
+        float: right;
+    }
+}
+
+
+/*
+ * Posts
+ */
+ main img {
+     border-radius: 25px;
+ }
+
+ .caption {
+    font-family: 'Roboto Slab', sans-serif;
+ }
+.quote {
+    background-color: #fff;
+    border-radius: 25px;
+}
+.quote .caption {
+    font-size: .8em;
+    font-style: italic;
+}
+
+.essay {
+    background-color: #18d0a1;
+    border-radius: 25px;
+}
+.essay a {
+    color: #fff;
+}
+
+blockquote {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-left: 15px;
+    border-left: 3px solid #ccc;
+  }
+

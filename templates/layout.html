@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Travis Giggy</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/custom.css') }}" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&family=Roboto+Slab:wght@100;400&display=swap" rel="stylesheet">
+    {% block css %}{% endblock %}
+</head>
+
+<body>
+
+    <div class="cover-container d-flex p-3 mx-auto flex-column">
+
+        <header>
+            <div class="masthead">
+                <h3 class="masthead-brand text-center text-lg-left">Travis Giggy</h3>
+                <nav class="nav nav-masthead justify-content-center">
+                    <a class="nav-link active" href="/">Home</a>
+                    <a class="nav-link" href="/posts">Blog</a>
+                    <a class="nav-link" href="/brain">Brain</a>
+                </nav>
+            </div>
+        </header>
+
+        <main role="main">
+            {% block body %}{% endblock %}
+        </main>
+
+
+
+    </div>
+
+</body>
+{% block script %}{% endblock %}
+
+</html>

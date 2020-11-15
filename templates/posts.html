@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+{% block body %}
+
+    {% for post in posts %}
+        <div class="row mb-5">
+
+            {% if post.type == "essay" %}
+                <div class="col essay p-5">
+            {% elif post.type == "quote" %}
+                <div class="col quote p-5">
+            {% else %}
+                <div class="col">
+            {% endif %}
+
+                <a href="{{ url_for('post', name=post.path.replace('posts/', '')) }}">
+                    {% if post.type == "quote" or post.type == "video" %}
+
+                        <h2>{{ post.html|safe }}</h2>
+
+                    {% else %}
+
+                        {% if post.image %}
+                            <div class="row{% if post.type == 'landscape' %} landscape{% endif %}">
+                                <div class="col mb-2">
+                                    <img src="{{ url_for('static', filename='media/%s' % post.image) }}" />
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        {% if post.type=="essay" %}
+                            <div class="row"><div class="col">
+                                [Essay]
+                            </div></div>
+                        {% endif %}
+
+                        <div class="row">
+                            <div class="col-md-10 col-sm-8 mr-auto">
+                    
+                                <h5>{{ post.title }}</h5>
+                    
+                                {% if post.desc %}
+                                    <p class="mb-0">{{ post.desc }}</p>
+                                {% endif %}
+                    
+                            </div>
+                            <div class="col-md-2 col-sm-2 my-auto float-md-right float-sm-left"><small>{{ post.date }}</small></div>
+                        </div>
+                        
+                    {% endif %}
+                </a>
+            </div>
+        </div>
+    {% endfor %}
+
+
+{% endblock %}
