@@ -6,7 +6,6 @@ import re
 import yaml
 import colorsys
 import random
-import urllib.parse
 
 import pdb
 
@@ -119,6 +118,12 @@ def miki_reset_meta_work(miki):
     
     return miki
 
+# make any links in the html body go to the special "find-page" url
+def miki_reset_html_links(html):
+    html = re.sub(r'<a href="', r'<a href="/miki/find-page/', html)
+    return html
+
+
 # make an object with every page, it's metadata, and links
 def miki_extract(mikis):
     folder_id = 0
@@ -216,7 +221,7 @@ def clean_node_path(path):
             file_name = path
             miki_id = file_name.split(' ')[0]
             folder_id = 'External'
-            url = urllib.parse.quote("external-file/{}".format(file_name))
+            url = "external-file/{}".format(miki_id)
         else:    
             bits = path.split('/')              # split into list
 
@@ -224,7 +229,7 @@ def clean_node_path(path):
             file_name = bits[-1]                # get the last bit with no folders
             miki_id = file_name.split(' ')[0]     # get the part with the decimal classification
             folder_id = miki_id.split('.')[0]
-            url = urllib.parse.quote("{}/{}".format(folder_name, file_name))
+            url = "{}/{}".format(folder_id, miki_id)
     except:
         pdb.set_trace()
 

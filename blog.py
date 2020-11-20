@@ -50,10 +50,21 @@ def miki():
 @app.route("/miki/<folder>/<file>")
 def miki_page(folder, file):
     mikis_json = utils.get_mikis_json(flatpages, MIKI_DIR)
-    path = '{}/{}/{}'.format(MIKI_DIR, folder, file)
+    
+    # find the folder and file name to get
+    if file in mikis_json['nodes'].keys():
+        # this file does exist, so get it and redirect
+        folder_name = mikis_json['nodes'][file]['folderName']
+        file_name = mikis_json['nodes'][file]['fileName']
+    else:
+        folder_name = "no_url_for_you"
+        file_name = "no_url_for_you"
+
+    path = '{}/{}/{}'.format(MIKI_DIR, folder_name, file_name)
     miki = flatpages.get_or_404(path)
     
     miki = utils.miki_reset_meta(miki)
+    miki.html = utils.miki_reset_html_links(miki.html)
     path = utils.clean_node_path(miki.path)
     miki_json = utils.get_miki_json_for_js(miki, path)
     mikis_json = utils.get_mikis_json_for_miki_id(path['miki_id'], mikis_json) # restrict mikis_json to only nodes that reference this file
@@ -94,10 +105,11 @@ def find_page(file):
 
     if node_path['miki_id'] in mikis_json['nodes'].keys():
         # this file does exist, so get it and redirect
-        folder_name = mikis_json['nodes'][node_path['miki_id']]['folderName']
+        folder_name = mikis_json['nodes'][node_path['miki_id']]['folderId']
+        file_name = mikis_json['nodes'][node_path['miki_id']]['mikiId']
 
         #return render_template('miki.html', miki_json=miki_json, mikis_json=mikis_json)
-        return redirect('/{}/{}/{}'.format(MIKI_DIR, folder_name, file))
+        return redirect('/{}/{}/{}'.format(MIKI_DIR, folder_name, file_name))
 
     else:
         return redirect('/miki/external-file/{}'.format(file))
