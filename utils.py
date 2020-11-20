@@ -120,7 +120,10 @@ def miki_reset_meta_work(miki):
 
 # make any links in the html body go to the special "find-page" url
 def miki_reset_html_links(html):
-    html = re.sub(r'<a href="', r'<a href="/miki/find-page/', html)
+    # if this has already been done, skip
+    if '/miki/find-page' not in html:
+        html = re.sub(r'<a href="', r'<a href="/miki/find-page/', html)
+    
     return html
 
 
