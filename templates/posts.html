@@ -1,6 +1,10 @@
 {% extends "layout.html" %}
 {% block body %}
 
+    <div class="container">
+
+        <h1>Blog Posts</h1>
+
     {% for post in posts %}
         <div class="row mb-5">
 
@@ -9,7 +13,7 @@
             {% elif post.type == "quote" %}
                 <div class="col quote p-5">
             {% else %}
-                <div class="col">
+                <div class="col post">
             {% endif %}
 
                 <a href="{{ url_for('post', name=post.path.replace('posts/', '')) }}">
@@ -51,6 +55,8 @@
             </div>
         </div>
     {% endfor %}
+
+    </div>
 
 
 {% endblock %}

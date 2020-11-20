@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+{% block css %}
+    
+{% endblock %}
+{% block body %}
+    
+    <div id="info" class="container" style="height: 50px;">
+        <div class="row">
+            <div class="col"><h1 class="mb-3">Personal Wiki</h1></div>
+        </div>
+        <div class="row">
+            <div class="col-2">Folder:</div>
+            <div class="col-10" id="node-folder">Hover over a node to see information</div>
+        </div>
+        <div class="row">
+            <div class="col-2">File:</div>
+            <div class="col-10" id="node-file"></div>
+        </div>
+    </div>
+    
+    <canvas id="viewport" width="800" height="600"></canvas>
+
+{% endblock %}
+{% block script %}
+    <script src="{{ url_for('static', filename='js/arbor.js') }}"></script> 
+    <script src="{{ url_for('static', filename='js/graph.js') }}"></script>
+    <script>
+
+    (function($){
+        
+        $(document).ready(function(){
+        
+            var sys = arbor.ParticleSystem(1000, 600, 0.5) // create the system with sensible repulsion/stiffness/friction
+            sys.parameters({gravity:true}) // use center-gravity to make the graph settle nicely (ymmv)
+            sys.renderer = graph.Renderer("#viewport") // our newly created renderer will have its .init() method called shortly by sys...
+            sys.renderer.parameters("canvasWidth", window.innerWidth);
+            sys.renderer.parameters("canvasHeight", window.innerHeight - 100);
+
+            var mikis_json = {{ mikis_json|safe }};
+            sys.graft(mikis_json)
+        
+        });
+
+    })(this.jQuery)
+
+    </script>
+{% endblock %}

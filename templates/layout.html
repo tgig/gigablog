@@ -3,37 +3,45 @@
 
 <head>
     <title>Travis Giggy</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/custom.css') }}" />
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&family=Roboto+Slab:wght@100;400&display=swap" rel="stylesheet">
     {% block css %}{% endblock %}
 </head>
 
-<body>
+<body class="min-vh-100 d-flex flex-column">
 
-    <div class="cover-container d-flex p-3 mx-auto flex-column">
-
-        <header>
-            <div class="masthead">
-                <h3 class="masthead-brand text-center text-lg-left">Travis Giggy</h3>
-                <nav class="nav nav-masthead justify-content-center">
-                    <a class="nav-link active" href="/">Home</a>
-                    <a class="nav-link" href="/posts">Blog</a>
-                    <a class="nav-link" href="/brain">Brain</a>
-                </nav>
-            </div>
-        </header>
+        <div class="container d-flex flex-column flex-md-row align-items-center p-3 mt-2 mb-2 mx-auto">
+            <h3 class="my-0 mr-md-auto masthead-brand">Travis Giggy</h3>
+            <nav class="my-2 my-md-0 mr-md-3">
+                <a class="p-2 text-dark" href="/">Home</a>
+                <a class="p-2 text-dark" href="/posts">Blog</a>
+                <a class="p-2 text-dark" href="/miki">Miki</a>
+                <a class="p-2 text-dark" href="/contact">Contact</a>
+            </nav>
+        </div>
 
         <main role="main">
             {% block body %}{% endblock %}
         </main>
 
+        <footer class="container mt-auto mx-auto mb-3 pt-2">
+            <div class="row">
+                <div class="col text-center text-nowrap">&#169; Travis Giggy</div>
+                <div class="col text-center"><a href="/contact"><img src="{{ url_for('static', filename='img/email-1-240.png') }}" height="20" /></a></div>
+                <div class="col text-center"><a href="https://twitter.com/tgig"><img src="{{ url_for('static', filename='img/twitter-3-240.png') }}" height="20" /></a></div>
+                <div class="col text-center"><a href="https://www.linkedin.com/in/travisgiggy/"><img src="{{ url_for('static', filename='img/linkedin-3-240.png') }}" height="20" /></a></div>
+                <div class="col text-center"><a href="/site-map"><img src="{{ url_for('static', filename='img/sitemap-5-240.png') }}" height="20" /></a></div>
+            </div>
+        </footer>
 
 
-    </div>
-
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 {% block script %}{% endblock %}
 

@@ -6,7 +6,19 @@
 a,
 a:focus,
 a:hover {
+    color: #7e45e8;
+}
+
+/* Colors */
+.text-dark {
     color: #4d4d4d;
+}
+.jumbotron {
+    background-color: #e84a45;
+    color: #fff;
+}
+.bg-white {
+    background-color: #ffffff;
 }
 
 /* Headers */
@@ -33,15 +45,16 @@ body {
 }
 
 body {
-    display: -ms-flexbox;
+    /* display: -ms-flexbox;
     display: -webkit-box;
-    display: flex;
+    display: flex; */
     color: #4d4d4d;
     font-family: "Raleway", sans-serif;
 }
 
-.cover-container {
-    width: 42em;
+
+.container {
+    max-width: 42em;
 }
 
 
@@ -84,6 +97,7 @@ body {
  */
  main img {
      border-radius: 25px;
+     max-width: 100%;
  }
 
  .caption {
@@ -99,11 +113,15 @@ body {
 }
 
 .essay {
-    background-color: #18d0a1;
+    background-color: #45e8bf;
     border-radius: 25px;
 }
 .essay a {
     color: #fff;
+}
+
+.post a {
+    color: #4d4d4d;
 }
 
 blockquote {
@@ -113,3 +131,48 @@ blockquote {
     border-left: 3px solid #ccc;
   }
 
+
+/*
+ * MikiS
+ */
+#viewport {
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    margin-top: -72px;
+}
+
+
+/* MAYBE GET RID OF THIS? */
+.modal-dialog {
+    max-width: 75%;
+}
+
+
+/*
+ * Miki
+ */
+ .wrapper {
+    display: flex;
+    align-items: stretch;
+}
+
+#sidebar {
+    min-width: 200px;
+    max-width: 200px;
+    min-height: 100vh;
+}
+
+#sidebar.active {
+    margin-left: -250px;
+}
+
+
+
+@media (max-width: 768px) {
+    #sidebar {
+        margin-left: -250px;
+    }
+    #sidebar.active {
+        margin-left: 0;
+    }
+}

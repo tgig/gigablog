@@ -1,0 +1,93 @@
+{% extends "layout.html" %}
+{% block body %}
+
+    <div class="container">
+        <div id="info" style="height: 50px;">
+            <div class="row">
+                <div class="col-2">Folder:</div>
+                <div class="col-10" id="node-folder">{{ miki_json.path.folderName }}</div>
+            </div>
+            <div class="row">
+                <div class="col-2">File:</div>
+                <div class="col-10" id="node-file">{{ miki_json.path.fileName }}</div>
+            </div>
+        </div>
+
+        <canvas id="miki_viewport" width="640" height="300"></canvas>
+
+            
+        <div>
+            <div class="mb-5">
+                {{ miki_json.html|safe }}
+            </div>
+            <hr class="mb-5" />
+            {% if miki_json.meta.source %}
+                <div class="mb-5">
+                    <h5>Source:</h5>
+                    <ul>
+                    {% for source in miki_json.meta.source %}
+                        <li>
+                        {% if source.link %}
+                            <a href="/miki/find-page/{{ source.link|urlencode }}">{{ source.link }}</a>    
+                        {% else %}
+                            {{ source }}
+                        {% endif %}
+                        </li>
+                    {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+
+            {% if miki_json.meta.tags %}
+                <div class="mb-5">
+                    <h5>Tags:</h5>
+                    <ul>
+                    {% for tag in miki_json.meta.tags %}
+                        <li>{{ tag }}</li>
+                    {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+
+            {% if miki_json.meta.relevant %}
+                <div class="mb-5">
+                    <h5>Relevant:</h5>
+                    <ul>
+                    {% for r in miki_json.meta.relevant %}
+                        <li><a href="/miki/find-page/{{ r.link|urlencode }}">{{ r.link }}</a></li>
+                    {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+
+            
+        </div>
+    </div>
+
+
+{% endblock %}
+{% block script %}
+    <script src="{{ url_for('static', filename='js/arbor.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/graph.js') }}"></script>
+    <script>
+
+    (function($){
+        
+        $(document).ready(function(){
+        
+            var sys = arbor.ParticleSystem(1000, 600, 0.5) // create the system with sensible repulsion/stiffness/friction
+            sys.parameters({gravity:true}) // use center-gravity to make the graph settle nicely (ymmv)
+            sys.renderer = graph.Renderer("#miki_viewport") // our newly created renderer will have its .init() method called shortly by sys...
+            sys.renderer.parameters("folderName", "{{ miki_json.path.folderName }}");
+            sys.renderer.parameters("fileName", "{{ miki_json.path.fileName }}");
+
+            var mikis_json = {{ mikis_json|safe }};
+            sys.graft(mikis_json)
+        
+        });
+
+    })(this.jQuery)
+
+    </script>
+
+{% endblock %}
