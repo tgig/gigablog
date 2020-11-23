@@ -61,3 +61,6 @@ relevant:
 - [[116.054 Life Lessons - Ask for help]]
 - [[116.055 Life Lessons - Quit, don't quit. Noodles, no noodles]]
 - [[116.056 Life Lessons - Control the inputs not the outcomes]]
+- [[116.057 Life Lessons - Who has done this well already]]
+- [[116.058 Life Lessons - If it is important, do it first thing in the morning]]
+- [[116.059 Life Lessons - Make your decisions as expected value calculations]]
