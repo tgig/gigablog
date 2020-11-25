@@ -3,3 +3,4 @@ venv/
 __pycache__
 "_PROCESSED NOTES"/
 "_UNPROCESSED NOTES"/
+build/
