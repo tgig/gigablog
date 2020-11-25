@@ -22,6 +22,7 @@
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script src="/static/js/graph.js"></script>
     <script>
+        graph = {{ mikis|safe }};
         GraphRenderer("graphIt", "all", window.innerWidth, window.innerHeight - 100, "node-folder", "node-file")
     </script>
     

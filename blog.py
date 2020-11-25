@@ -1,6 +1,6 @@
 import sys
 from operator import itemgetter
-from flask import Flask, render_template, redirect, send_file
+from flask import Flask, render_template, redirect, send_file, make_response
 from flask_flatpages import FlatPages, pygments_style_defs
 from flask_frozen import Freezer
 import utils
@@ -23,7 +23,6 @@ freezer = Freezer(app)
 app.config.from_object(__name__)
 
 
-
 ### ROUTES ###
 
 @app.route("/")
@@ -43,10 +42,12 @@ def post(name):
     return render_template('post.html', post=post)
 
 @app.route("/miki/")
-def miki2():
-    return render_template('mikis.html')
+def miki():
+    # get all mikis to start with
+    mikis_json = utils.get_mikis_json(flatpages, MIKI_DIR)
+    return render_template('mikis.html', mikis=mikis_json)
 
-@app.route("/miki/<folder>/<file>")
+@app.route("/miki/<folder>/<file>/")
 def miki_page(folder, file):
     mikis_json = utils.get_mikis_json(flatpages, MIKI_DIR)
     
@@ -67,22 +68,20 @@ def miki_page(folder, file):
 
     return render_template('miki.html', miki_json=miki_json) #, mikis_json=mikis_json)
 
-@app.route('/miki/external-file/<file>')
+@app.route('/miki/external-file/<file>/')
 def external_file(file):
     return render_template('external-file.html', file=file)
 
-@app.route('/contact')
+@app.route('/contact/')
 def contact_page():
     return render_template('contact.html')
 
-@app.route('/site-map')
+@app.route('/site-map/')
 def site_map():
     posts = [p for p in flatpages if p.path.startswith(POST_DIR)]
     mikis_json = utils.get_mikis_json(flatpages, MIKI_DIR)
-    # sort by node key
-    mikis = {}
-    for key in sorted(mikis_json['nodes'].keys()):
-        mikis[key] = mikis_json['nodes'][key]
+    
+    mikis = sorted(mikis_json['nodes'], key=itemgetter('id'))
 
     return render_template('site-map.html', posts=posts, mikis=mikis, today=date.today())
 
@@ -90,12 +89,18 @@ def site_map():
 def site_map_xml():
     posts = [p for p in flatpages if p.path.startswith(POST_DIR)]
     mikis_json = utils.get_mikis_json(flatpages, MIKI_DIR)
-    return render_template('site-map.xml', posts=posts, mikis=mikis_json, today=date.today())
+    #return render_template('site-map.xml', posts=posts, mikis=mikis_json, today=date.today())
+
+    template = render_template('site-map.xml', posts=posts, mikis=mikis_json, today=date.today())
+    response = make_response(template)
+    response.headers['Content-Type'] = 'application/xml'
+
+    return response
 
 
 ### NON PAGE ROUTES ###
 
-@app.route("/miki/json/<miki_id>")
+@app.route("/miki/json/<miki_id>/")
 def return_miki_json(miki_id):
     # get all mikis to start with
     mikis_json = utils.get_mikis_json(flatpages, MIKI_DIR)
@@ -106,7 +111,7 @@ def return_miki_json(miki_id):
 
     return mikis_json
 
-@app.route("/miki/find-page/<file>")
+@app.route("/miki/find-page/<file>/")
 def find_page(file):
 
     mikis_json = utils.get_mikis_json(flatpages, MIKI_DIR)
@@ -125,7 +130,6 @@ def find_page(file):
     else:
         return redirect('/miki/external-file/{}'.format(file))
 
-    
 
 @app.route('/media/<file>')
 def media_file(file):
@@ -135,6 +139,27 @@ def media_file(file):
     return send_file(file_loc)
 
 
+@freezer.register_generator
+def freeze_miki_pages():
+
+    #delete existing files in the /build dir
+
+
+    posts = [p for p in flatpages if p.path.startswith(POST_DIR)]
+    mikis = utils.get_mikis_json(flatpages, MIKI_DIR)
+
+    
+    # get all posts
+    for post in posts:
+        yield '/{}/'.format(post.path)
+    
+    #pdb.set_trace()
+
+    for miki in mikis['nodes']:
+        yield '/miki/{}/'.format(miki['url'])
+
+
+
 ### MAIN ###
 
 if __name__ == "__main__":
@@ -142,4 +167,3 @@ if __name__ == "__main__":
         freezer.freeze()
     else:
         app.run(host='0.0.0.0', port=8000, debug=True)
-

@@ -1,6 +1,8 @@
 
 var GraphRenderer = function(svgId, mikiId, svgWidth, svgHeight, folderInfoDiv, fileInfoDiv) {
 
+    //var graph = json_data;
+
     document.getElementById(svgId).setAttribute('height', svgHeight);
     document.getElementById(svgId).setAttribute("width", svgWidth);
 
@@ -24,14 +26,17 @@ var GraphRenderer = function(svgId, mikiId, svgWidth, svgHeight, folderInfoDiv, 
                                             return d.id;
                                         }))
         .force("charge", d3.forceManyBody().strength(-50))
-        .force("collision", d3.forceCollide().radius(radius + 4)) //.radius(function(d) { return d.radius }))
+        .force("collision", d3.forceCollide().radius(radius + 4))
         .force("center", d3.forceCenter(width / 2, height / 2))
         .force("x", d3.forceX(width / 2).strength(0.2))
         .force("y", d3.forceY(height / 2).strength(0.3));
+    
+    mikiId = '125.002';
 
-    d3.json("/miki/json/" + mikiId, function (error, graph) {
-        if (error) throw error;
+    //d3.json("/miki/json/" + mikiId, function (error, graph) {
+    //    if (error) throw error;
 
+    setTimeout(function () {
         var link = svg
             .append("g")
             .attr("class", "links")
@@ -64,7 +69,8 @@ var GraphRenderer = function(svgId, mikiId, svgWidth, svgHeight, folderInfoDiv, 
         });
 
         node.on("click", function (node) {
-            clicked(node);
+            //clicked(node);
+            window.location.href = "/miki/" + node.url;
         });
         
         node.on("mouseover", function(d) {
@@ -85,37 +91,57 @@ var GraphRenderer = function(svgId, mikiId, svgWidth, svgHeight, folderInfoDiv, 
             }
         });
 
-        simulation.nodes(graph.nodes).on("tick", ticked);
-
-        simulation.force("link").links(graph.links).strength(3);
-
-        function ticked() {
+        //simulation.nodes(graph.nodes).on("tick", ticked);
+        simulation.nodes(graph.nodes).on("tick", function() {
             link.attr("x1", function (d) {
                 return d.source.x;
             })
-                .attr("y1", function (d) {
-                    return d.source.y;
-                })
-                .attr("x2", function (d) {
-                    return d.target.x;
-                })
-                .attr("y2", function (d) {
-                    return d.target.y;
-                });
+            .attr("y1", function (d) {
+                return d.source.y;
+            })
+            .attr("x2", function (d) {
+                return d.target.x;
+            })
+            .attr("y2", function (d) {
+                return d.target.y;
+            });
 
             node.attr("cx", function (d) {
                 return (d.x = Math.max(radius, Math.min(width - radius, d.x)));
             }).attr("cy", function (d) {
                 return (d.y = Math.max(radius, Math.min(height - radius, d.y)));
             });
+        })
+
+        simulation.force("link").links(graph.links).strength(3);
+
+        //function ticked() {
+            // link.attr("x1", function (d) {
+            //     return d.source.x;
+            // })
+            //     .attr("y1", function (d) {
+            //         return d.source.y;
+            //     })
+            //     .attr("x2", function (d) {
+            //         return d.target.x;
+            //     })
+            //     .attr("y2", function (d) {
+            //         return d.target.y;
+            //     });
+
+            // node.attr("cx", function (d) {
+            //     return (d.x = Math.max(radius, Math.min(width - radius, d.x)));
+            // }).attr("cy", function (d) {
+            //     return (d.y = Math.max(radius, Math.min(height - radius, d.y)));
+            // });
             // .attr("cx", function (d) { return d.x; })
             // .attr("cy", function (d) { return d.y; });
-        }
+        //}
 
-        function clicked(d) {
-            window.location.href = "/miki/" + d.url;
-        }
-    });
+        // function clicked(d) {
+        //     window.location.href = "/miki/" + d.url;
+        // }
+    }, 1000);
 
     function dragstarted(d) {
         if (!d3.event.active) simulation.alphaTarget(0.3).restart();
