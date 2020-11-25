@@ -13,7 +13,7 @@
             </div>
         </div>
 
-        <canvas id="miki_viewport" width="640" height="300"></canvas>
+        <svg id="graphIt"></svg>
 
             
         <div>
@@ -67,27 +67,9 @@
 
 {% endblock %}
 {% block script %}
-    <script src="{{ url_for('static', filename='js/arbor.js') }}"></script>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
     <script src="{{ url_for('static', filename='js/graph.js') }}"></script>
     <script>
-
-    (function($){
-        
-        $(document).ready(function(){
-        
-            var sys = arbor.ParticleSystem(1000, 600, 0.5) // create the system with sensible repulsion/stiffness/friction
-            sys.parameters({gravity:true}) // use center-gravity to make the graph settle nicely (ymmv)
-            sys.renderer = graph.Renderer("#miki_viewport") // our newly created renderer will have its .init() method called shortly by sys...
-            sys.renderer.parameters("folderName", "{{ miki_json.path.folderName }}");
-            sys.renderer.parameters("fileName", "{{ miki_json.path.fileName }}");
-
-            var mikis_json = {{ mikis_json|safe }};
-            sys.graft(mikis_json)
-        
-        });
-
-    })(this.jQuery)
-
+        GraphRenderer("graphIt", "{{ miki_json.path.mikiId }}", 640, 150, "node-folder", "node-file")
     </script>
-
 {% endblock %}

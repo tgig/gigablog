@@ -6,6 +6,7 @@ import re
 import yaml
 import colorsys
 import random
+import os
 
 import pdb
 
@@ -13,7 +14,7 @@ def my_renderer(text):
     #"""Inject the markdown rendering into the jinga template"""
     #rendered_body = render_template_string(text)
     wikid = wiki_me(text)    
-    pygmented_body = markdown.markdown(wikid, extensions=['codehilite', 'fenced_code', 'tables', 'wikilinks'])
+    pygmented_body = markdown.markdown(wikid, extensions=['codehilite', 'fenced_code', 'tables', 'wikilinks', 'nl2br'])
     return pygmented_body
 
 def wiki_me(text):
@@ -22,7 +23,8 @@ def wiki_me(text):
     return text
 
 def wiki_image(text):
-    media = '/static/media/'
+    #media = '/static/media/'
+    media = '/media/'
     # replace all wiki links ![[image.png]] with html
     return re.sub(r'\!\[\[(.*?)\]\]', '<img src="%s\\1" />' % media, text)
 
@@ -30,15 +32,36 @@ def wiki_link(text):
     return re.sub(r'\[\[(.*?)\]\]', '<a href="\\1">\\1</a>', text)
 
 
+# look in the myriad of folders that hold content to try and find an image
+def get_image_file(file, locs):
+    # get a list of all the media files we have
+    media_loc = ['static/media', 'content/miki']
+    media_list = []
+
+    for loc in media_loc:
+        for root, subdirs, files in os.walk(loc):
+            for f in files:
+                if f.endswith('.png') or f.endswith('.jpg') or f.endswith('.gif'):
+                    if f == file:
+                        return "{}/{}".format(root, f)
+
+    return "static/img/nada.png"
+
 
 def get_mikis_json(flatpages, MIKI_DIR):
     mikis = [m for m in flatpages if m.path.startswith(MIKI_DIR)]
     # I need to deal with wikilinks, which flatpages does not like, so let's reset the meta for each page
-    miki = miki_reset_meta(mikis)
+    mikis = miki_reset_meta(mikis)
     mikis_json = miki_extract(mikis)
     return mikis_json
 
-def get_miki_json_for_js(miki, path):
+
+def get_miki_json_for_js(miki):
+
+    miki = miki_reset_meta(miki)
+    miki.html = miki_reset_html_links(miki.html)
+    path = clean_node_path(miki.path)
+
     miki_json = { 
         "path": {
             "folderId": path['folder_id'], 
@@ -54,35 +77,22 @@ def get_miki_json_for_js(miki, path):
 
 def get_mikis_json_for_miki_id(miki_id, mikis_json):
     # we want to return any backlinks and forelinks that have anything to do with the passed in miki_id
-    # for the future: this feels like it could be done much more efficiently...
+
+    miki_index = next((index for (index, d) in enumerate(mikis_json['nodes']) if d['id'] == miki_id), None)
 
     # set the mass for the passed in miki_id so it rests in the center
-    mikis_json['nodes'][miki_id]["mass"] = 100
+    mikis_json['nodes'][miki_index]["mass"] = 10
 
-    # first go throug the edges and add any edge that references the passed in miki_id
-    keep_me = [miki_id]
-    for key in mikis_json['edges'].keys():
-        if miki_id in mikis_json['edges'][key].keys():
-            keep_me.append(key)
+    # find all links with source or target of this miki_id
+    keep_links = [x for x in mikis_json['links'] if x['source'] == miki_id or x['target'] == miki_id]
 
-    # second remove edges that didn't match
-    delete_me = set(mikis_json['edges'].keys()).difference(keep_me)
-    for d in delete_me:
-        mikis_json['edges'].pop(d, None)
-    
-    # third, find nodes to keep
-    keep_me = [miki_id]
-    for key in mikis_json['edges'].keys():
-        keep_me.append(key)
-        for sub_key in mikis_json['edges'][key].keys():
-            keep_me.append(sub_key)
-    
-    # finally, remove the nodes that don't match
-    delete_me = set(mikis_json['nodes'].keys()).difference(keep_me)
-    for d in delete_me:
-        mikis_json['nodes'].pop(d, None)
+    # remove every link not in the list
+    mikis_json['links'] = keep_links
 
-    # what is left over is only the nodes and edges that reference this miki_id
+    # keep only nodes that are in the links
+    keep_links_detail = [x['source'] for x in keep_links] + [x['target'] for x in keep_links]
+    keep_nodes = [x for x in mikis_json['nodes'] if x['id'] in keep_links_detail]
+    mikis_json['nodes'] = keep_nodes
 
     return mikis_json
 
@@ -101,20 +111,23 @@ def miki_reset_meta(mikis):
 def miki_reset_meta_work(miki):
     miki._meta = re.sub(r'\[\[(.*?)\]\]', '{ "link": "\\1" }', miki._meta) # turn wikilinks into json
     miki._meta = miki._meta.replace('#', '') # remove hash tags, they are invalid yaml
-    miki.meta = yaml.safe_load(miki._meta)
     
-    # make sure the source, keywords, and relevant links are lists, not strings
-    if 'source' in miki.meta.keys():
-        if type(miki.meta['source']) == str or type(miki.meta['source']) == dict:
-            miki.meta['source'] = [miki.meta['source']]
-    
-    if 'tags' in miki.meta.keys():
-        if type(miki.meta['tags']) == str:
-            miki.meta['tags'] = [miki.meta['tags']]
-    
-    if 'relevant' in miki.meta.keys():
-        if type(miki.meta['relevant']) == str:
-            miki.meta['relevant'] = [miki.meta['relevant']]
+    if miki.meta:
+        miki.meta = yaml.safe_load(miki._meta)
+
+        # make sure the source, keywords, and relevant links are lists, not strings
+        if 'source' in miki.meta.keys():
+            if type(miki.meta['source']) == str or type(miki.meta['source']) == dict:
+                miki.meta['source'] = [miki.meta['source']]
+        
+        if 'tags' in miki.meta.keys():
+            if type(miki.meta['tags']) == str:
+                miki.meta['tags'] = [miki.meta['tags']]
+        
+        if 'relevant' in miki.meta.keys():
+            if type(miki.meta['relevant']) == str:
+                miki.meta['relevant'] = [miki.meta['relevant']]
+
     
     return miki
 
@@ -127,13 +140,14 @@ def miki_reset_html_links(html):
     return html
 
 
+
 # make an object with every page, it's metadata, and links
 def miki_extract(mikis):
     folder_id = 0
     color = ""
     graph_json = {
-        "nodes": {},
-        "edges": {}
+        "nodes": [],
+        "links": []
     }
 
     # loop through all pages and add nodes (pages) and edges (links)
@@ -151,24 +165,21 @@ def miki_extract(mikis):
             color = get_rand_color()
             folder_id = node_path['folder_id']
 
-        graph_json["nodes"][node_path['miki_id']] = {
-            "mass": 1,
-            "color": color, 
-            "origColor": color, 
-            "folderId": node_path['folder_id'], 
-            "mikiId": node_path['miki_id'],
-            "folderName": node_path['folder_name'],
-            "fileName": node_path['file_name'],
-            "url": node_path['url']
-        }
+        # graph_json["nodes"].append({
+        #     "id": node_path['miki_id'],
+        #     "mass": 1,
+        #     "color": color, 
+        #     "origColor": color,
+        #     "folderId": node_path['folder_id'], 
+        #     "folderName": node_path['folder_name'],
+        #     "fileName": node_path['file_name'],
+        #     "url": node_path['url']
+        # })
+        graph_json = make_graph_json_node(graph_json, node_path, color)
 
-        # loop through keys and add each key to node_path
-        # for tag in miki.meta:
-        #     if miki.meta[tag]: # if the tag contents are not empty (None)
-        #         graph_json["nodes"][node_path][tag] = miki.meta[tag]
 
         # 2. add edge
-        graph_json["edges"][node_path['miki_id']] = {}
+        #graph_json["edges"][node_path['miki_id']] = {}
 
         meta_links = []
         
@@ -196,23 +207,55 @@ def miki_extract(mikis):
                     if type(obj) == dict:
                         meta_links.append(obj['link'])
 
-
-
         body_links = re.findall(r'\[\[(.*?)\]\]', miki.body)    # get links out of body text
+        # comprehension to remove links
+        body_links = [x for x in body_links if 'png' not in x and 'jpg' not in x and 'gif' not in x]
+
         links = list(set(meta_links + body_links))              # merge w/o dups
+
 
         for link in links:
             node_link_path = clean_node_path(link)
-            graph_json['edges'][node_path['miki_id']].update({ node_link_path['miki_id']: {}})
+            
+            graph_json['links'].append({
+                "source": node_path['miki_id'],
+                "target": node_link_path['miki_id']
+            })
 
+    # make sure all links (edges) are also nodes
+    node_ids = [node['id'] for node in graph_json['nodes']]
+    for link in graph_json['links']:
+        if link['source'] not in node_ids:
+            node_path = clean_node_path(link['source'])
+            make_graph_json_node(graph_json, node_path, "#CCCCCC")
+            node_ids.append(link['source'])
 
-
-    # are there edges that don't exist in nodes? Add them
-    # for edge in graph_json['edges']:
-    #     if edge[1] not in graph_json['nodes']:
-    #         graph_json['nodes'].append(edge[1])
+        if link['target'] not in node_ids:
+            node_path = clean_node_path(link['target'])
+            make_graph_json_node(graph_json, node_path, "#CCCCCC")
+            node_ids.append(link['target'])
 
     return graph_json
+
+
+def make_graph_json_node(graph_json, node_path, color):
+    graph_json["nodes"].append({
+                "id": node_path['miki_id'],
+                "mass": 5,
+                "color": color, 
+                "origColor": color,
+                "folderId": node_path['folder_id'], 
+                "folderName": node_path['folder_name'],
+                "fileName": node_path['file_name'],
+                "url": node_path['url']
+            })
+    return graph_json
+
+
+
+
+
+
 
 
 # this works only because of my anal naming convention - every single file has a unique identifier in front of if
