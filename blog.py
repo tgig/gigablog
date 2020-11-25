@@ -47,8 +47,8 @@ def miki():
     mikis_json = utils.get_mikis_json(flatpages, MIKI_DIR)
     return render_template('mikis.html', mikis=mikis_json)
 
-@app.route("/miki/<folder>/<file>/")
-def miki_page(folder, file):
+@app.route("/miki/<file>/")
+def miki_page(file):
     mikis_json = utils.get_mikis_json(flatpages, MIKI_DIR)
     
     # find the folder and file name to get
@@ -58,19 +58,20 @@ def miki_page(folder, file):
         folder_name = this_miki['folderName']
         file_name = this_miki['fileName']
     else:
-        folder_name = "no_url_for_you"
+        #folder_name = "no_url_for_you"
         file_name = "no_url_for_you"
 
     path = '{}/{}/{}'.format(MIKI_DIR, folder_name, file_name)
     miki = flatpages.get_or_404(path)
     
     miki_json = utils.get_miki_json_for_js(miki)
+    mikis_json = utils.get_mikis_json_for_miki_id(miki_json['path']['mikiId'], mikis_json)
 
-    return render_template('miki.html', miki_json=miki_json) #, mikis_json=mikis_json)
+    return render_template('miki.html', miki=miki_json, mikis=mikis_json)
 
-@app.route('/miki/external-file/<file>/')
-def external_file(file):
-    return render_template('external-file.html', file=file)
+# @app.route('/miki/external-file/<file>/')
+# def external_file(file):
+#     return render_template('external-file.html', file=file)
 
 @app.route('/contact/')
 def contact_page():
@@ -100,35 +101,35 @@ def site_map_xml():
 
 ### NON PAGE ROUTES ###
 
-@app.route("/miki/json/<miki_id>/")
-def return_miki_json(miki_id):
-    # get all mikis to start with
-    mikis_json = utils.get_mikis_json(flatpages, MIKI_DIR)
+# @app.route("/miki/json/<miki_id>/")
+# def return_miki_json(miki_id):
+#     # get all mikis to start with
+#     mikis_json = utils.get_mikis_json(flatpages, MIKI_DIR)
 
-    # if this is a specific miki page, then restrict the full list down to only nodes/links that reference this file
-    if miki_id != "all":
-        mikis_json = utils.get_mikis_json_for_miki_id(miki_id, mikis_json)
+#     # if this is a specific miki page, then restrict the full list down to only nodes/links that reference this file
+#     if miki_id != "all":
+#         mikis_json = utils.get_mikis_json_for_miki_id(miki_id, mikis_json)
 
-    return mikis_json
+#     return mikis_json
 
-@app.route("/miki/find-page/<file>/")
-def find_page(file):
+# @app.route("/miki/find-page/<file>/")
+# def find_page(file):
 
-    mikis_json = utils.get_mikis_json(flatpages, MIKI_DIR)
-    node_path = utils.clean_node_path(file)
+#     mikis_json = utils.get_mikis_json(flatpages, MIKI_DIR)
+#     node_path = utils.clean_node_path(file)
 
-    # find the folder and file name to get
-    this_miki = next((item for item in mikis_json['nodes'] if item['id'] == node_path['miki_id']), None)
-    if this_miki:
-        # this file does exist, so get it and redirect
-        folder_name = this_miki['folderId']
-        file_name = this_miki['id']
+#     # find the folder and file name to get
+#     this_miki = next((item for item in mikis_json['nodes'] if item['id'] == node_path['miki_id']), None)
+#     if this_miki:
+#         # this file does exist, so get it and redirect
+#         folder_name = this_miki['folderId']
+#         file_name = this_miki['id']
 
-        #return render_template('miki.html', miki_json=miki_json, mikis_json=mikis_json)
-        return redirect('/{}/{}/{}'.format(MIKI_DIR.lower(), folder_name, file_name))
+#         #return render_template('miki.html', miki_json=miki_json, mikis_json=mikis_json)
+#         return redirect('/{}/{}/{}'.format(MIKI_DIR.lower(), folder_name, file_name))
 
-    else:
-        return redirect('/miki/external-file/{}'.format(file))
+#     else:
+#         return redirect('/miki/external-file/{}'.format(file))
 
 
 @app.route('/media/<file>')

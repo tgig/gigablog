@@ -1,7 +1,5 @@
 
-var GraphRenderer = function(svgId, mikiId, svgWidth, svgHeight, folderInfoDiv, fileInfoDiv) {
-
-    //var graph = json_data;
+var GraphRenderer = function(svgId, graph, svgWidth, svgHeight, folderInfoDiv, fileInfoDiv) {
 
     document.getElementById(svgId).setAttribute('height', svgHeight);
     document.getElementById(svgId).setAttribute("width", svgWidth);
@@ -31,11 +29,7 @@ var GraphRenderer = function(svgId, mikiId, svgWidth, svgHeight, folderInfoDiv, 
         .force("x", d3.forceX(width / 2).strength(0.2))
         .force("y", d3.forceY(height / 2).strength(0.3));
     
-    mikiId = '125.002';
-
-    //d3.json("/miki/json/" + mikiId, function (error, graph) {
-    //    if (error) throw error;
-
+    //I don't know why she swallowed the fly? But she fucking did and it doesn't work if she doesn't.
     setTimeout(function () {
         var link = svg
             .append("g")
@@ -69,7 +63,6 @@ var GraphRenderer = function(svgId, mikiId, svgWidth, svgHeight, folderInfoDiv, 
         });
 
         node.on("click", function (node) {
-            //clicked(node);
             window.location.href = "/miki/" + node.url;
         });
         
@@ -115,32 +108,7 @@ var GraphRenderer = function(svgId, mikiId, svgWidth, svgHeight, folderInfoDiv, 
 
         simulation.force("link").links(graph.links).strength(3);
 
-        //function ticked() {
-            // link.attr("x1", function (d) {
-            //     return d.source.x;
-            // })
-            //     .attr("y1", function (d) {
-            //         return d.source.y;
-            //     })
-            //     .attr("x2", function (d) {
-            //         return d.target.x;
-            //     })
-            //     .attr("y2", function (d) {
-            //         return d.target.y;
-            //     });
-
-            // node.attr("cx", function (d) {
-            //     return (d.x = Math.max(radius, Math.min(width - radius, d.x)));
-            // }).attr("cy", function (d) {
-            //     return (d.y = Math.max(radius, Math.min(height - radius, d.y)));
-            // });
-            // .attr("cx", function (d) { return d.x; })
-            // .attr("cy", function (d) { return d.y; });
-        //}
-
-        // function clicked(d) {
-        //     window.location.href = "/miki/" + d.url;
-        // }
+        
     }, 1000);
 
     function dragstarted(d) {

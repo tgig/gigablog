@@ -5,11 +5,11 @@
         <div id="info" style="height: 50px;">
             <div class="row">
                 <div class="col-2">Folder:</div>
-                <div class="col-10" id="node-folder">{{ miki_json.path.folderName }}</div>
+                <div class="col-10" id="node-folder">{{ miki.path.folderName }}</div>
             </div>
             <div class="row">
                 <div class="col-2">File:</div>
-                <div class="col-10" id="node-file">{{ miki_json.path.fileName }}</div>
+                <div class="col-10" id="node-file">{{ miki.path.fileName }}</div>
             </div>
         </div>
 
@@ -18,17 +18,17 @@
             
         <div>
             <div class="mb-5">
-                {{ miki_json.html|safe }}
+                {{ miki.html|safe }}
             </div>
             <hr class="mb-5" />
-            {% if miki_json.meta.source %}
+            {% if miki.meta.source %}
                 <div class="mb-5">
                     <h5>Source:</h5>
                     <ul>
-                    {% for source in miki_json.meta.source %}
+                    {% for source in miki.meta.source %}
                         <li>
-                        {% if source.link %}
-                            <a href="/miki/find-page/{{ source.link|urlencode }}">{{ source.link }}</a>    
+                        {% if source.miki_id %}
+                            <a href="/miki/{{ source.miki_id|urlencode }}">{{ source.file_name }}</a>    
                         {% else %}
                             {{ source }}
                         {% endif %}
@@ -38,23 +38,23 @@
                 </div>
             {% endif %}
 
-            {% if miki_json.meta.tags %}
+            {% if miki.meta.tags %}
                 <div class="mb-5">
                     <h5>Tags:</h5>
                     <ul>
-                    {% for tag in miki_json.meta.tags %}
+                    {% for tag in miki.meta.tags %}
                         <li>{{ tag }}</li>
                     {% endfor %}
                     </ul>
                 </div>
             {% endif %}
 
-            {% if miki_json.meta.relevant %}
+            {% if miki.meta.relevant %}
                 <div class="mb-5">
                     <h5>Relevant:</h5>
                     <ul>
-                    {% for r in miki_json.meta.relevant %}
-                        <li><a href="/miki/find-page/{{ r.link|urlencode }}">{{ r.link }}</a></li>
+                    {% for r in miki.meta.relevant %}
+                        <li><a href="/miki/{{ r.miki_id|urlencode }}">{{ r.file_name }}</a></li>
                     {% endfor %}
                     </ul>
                 </div>
@@ -70,6 +70,7 @@
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script src="{{ url_for('static', filename='js/graph.js') }}"></script>
     <script>
-        GraphRenderer("graphIt", "{{ miki_json.path.mikiId }}", 640, 150, "node-folder", "node-file")
+        graph = {{ mikis|safe }};
+        GraphRenderer("graphIt", graph, 640, 150, "node-folder", "node-file")
     </script>
 {% endblock %}

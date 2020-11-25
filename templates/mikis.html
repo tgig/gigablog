@@ -23,7 +23,7 @@
     <script src="/static/js/graph.js"></script>
     <script>
         graph = {{ mikis|safe }};
-        GraphRenderer("graphIt", "all", window.innerWidth, window.innerHeight - 100, "node-folder", "node-file")
+        GraphRenderer("graphIt", graph, window.innerWidth, window.innerHeight - 100, "node-folder", "node-file")
     </script>
     
 {% endblock %}
