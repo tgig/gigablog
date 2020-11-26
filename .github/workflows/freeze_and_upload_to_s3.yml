@@ -23,6 +23,9 @@ jobs:
       run: python blog.py build
 
   deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
     - uses: jakejarvis/s3-sync-action@master
       with:
         args: --delete
