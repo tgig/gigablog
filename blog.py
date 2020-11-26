@@ -118,7 +118,6 @@ def freeze_miki_pages():
     for root, subdirs, files in os.walk('content/'):
         for f in files:
             if f.endswith('.png') or f.endswith('.jpg') or f.endswith('.gif'):
-                pdb.set_trace()
                 shutil.copy('{}/{}'.format(root, f), 'build/static/media/{}'.format(f))
                 
     posts = [p for p in flatpages if p.path.startswith(POST_DIR)]
