@@ -21,8 +21,7 @@ def wiki_me(text):
     return text
 
 def wiki_image(text):
-    #media = '/static/media/'
-    media = '/media/'
+    media = '/static/media/'
     # replace all wiki links ![[image.png]] with html
     return re.sub(r'\!\[\[(.*?)\]\]', '<img src="%s\\1" />' % media, text)
 
