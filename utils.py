@@ -26,7 +26,6 @@ def wiki_image(text):
     return re.sub(r'\!\[\[(.*?)\]\]', '<img src="%s\\1" />' % media, text)
 
 def wiki_link(text):
-    #return re.sub(r'\[\[(.*?)\]\]', '<a href="\\1">\\1</a>', text)
     paths = wikilinks_to_path(text)
     for path in paths:
         text = text.replace("[[{}]]".format(path['file_name']), '<a href="/miki/{}">{}</a>'.format(path['url'], path['file_name']))
@@ -75,7 +74,6 @@ def get_mikis_json(flatpages, MIKI_DIR):
 def get_miki_json_for_js(miki):
 
     miki = miki_reset_meta(miki)
-    #miki.html = miki_reset_html_links(miki.html) NO LONGER DOING THIS B/C IT SHOULD BE DONE wiki_link() preprocess step
     path = clean_node_path(miki.path)
 
     miki_json = { 
@@ -125,12 +123,10 @@ def miki_reset_meta(mikis):
 
 # DRY
 def miki_reset_meta_work(miki):
-    #miki._meta = re.sub(r'\[\[(.*?)\]\]', '{ "link": "\\1" }', miki._meta) # turn wikilinks into json
     # get path info for all links in meta
     paths = wikilinks_to_path(miki._meta)
     # replace
     for path in paths:
-        #text = text.replace("[[{}]]".format(link), '<a href="/miki/{}">{}</a>'.format(path['url'], path['fileName']))
         miki._meta = miki._meta.replace("[[{}]]".format(path['file_name']), str(path))
 
 
@@ -188,8 +184,6 @@ def miki_get_graph(mikis):
 
         #######################################
         # 2. add edge
-        #graph_json["edges"][node_path['miki_id']] = {}
-
         meta_links = []
 
         # extract links out of source and relevant yaml tags, they should have already been modified to json
@@ -262,10 +256,6 @@ def miki_get_graph_node_json(node_path, color):
         "url": node_path['url']
     }
     
-
-
-
-
 
 
 
