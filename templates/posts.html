@@ -16,7 +16,7 @@
                 <div class="col post">
             {% endif %}
 
-                <a href="{{ url_for('post', name=post.path.replace('posts/', '')) }}">
+                <a href="{{ post['path'] }}.html">
                     {% if post.type == "quote" or post.type == "video" %}
 
                         <h2>{{ post.html|safe }}</h2>

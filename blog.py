@@ -13,8 +13,8 @@ DEBUG = True
 FLATPAGES_AUTO_RELOAD = DEBUG
 FLATPAGES_EXTENSION = ['.md', '.html']
 FLATPAGES_ROOT = 'content'
-POST_DIR = 'POSTS'
-MIKI_DIR = 'MIKI'
+POST_DIR = 'posts'
+MIKI_DIR = 'miki'
 FLATPAGES_HTML_RENDERER = utils.my_renderer
 
 app = Flask(__name__)
@@ -81,8 +81,9 @@ def contact_page():
 @app.route('/site-map.html')
 def site_map():
     posts = [p for p in flatpages if p.path.startswith(POST_DIR)]
+    posts.sort(key=itemgetter('date'), reverse=True)
+
     mikis_json = utils.get_mikis_json_for_all_pages(flatpages, MIKI_DIR)
-    
     mikis = sorted(mikis_json['nodes'], key=itemgetter('id'))
 
     return render_template('site-map.html', posts=posts, mikis=mikis, today=date.today())
@@ -91,7 +92,6 @@ def site_map():
 def site_map_xml():
     posts = [p for p in flatpages if p.path.startswith(POST_DIR)]
     mikis_json = utils.get_mikis_json_for_all_pages(flatpages, MIKI_DIR)
-    #return render_template('site-map.xml', posts=posts, mikis=mikis_json, today=date.today())
 
     template = render_template('site-map.xml', posts=posts, mikis=mikis_json, today=date.today())
     response = make_response(template)
