@@ -125,10 +125,10 @@ def freeze_miki_pages():
 
     # get all posts
     for post in posts:
-        yield '/{}/'.format(post.path)
+        yield '/{}.html'.format(post.path)
     
     for miki in mikis['nodes']:
-        yield '/miki/{}/'.format(miki['url'])
+        yield '/miki/{}.html'.format(miki['url'])
 
 
 
