@@ -43,17 +43,18 @@ def posts():
 def post(name):
     path = '{}/{}'.format(POST_DIR, name)
     post = flatpages.get_or_404(path)
+    
     return render_template('post.html', post=post)
 
 @app.route("/miki.html")
 def miki():
     # get all mikis to start with
-    mikis_json = utils.get_mikis_json(flatpages, MIKI_DIR)
+    mikis_json = utils.get_mikis_json_for_all_pages(flatpages, MIKI_DIR)
     return render_template('mikis.html', mikis=mikis_json)
 
 @app.route("/miki/<file>.html")
 def miki_page(file):
-    mikis_json = utils.get_mikis_json(flatpages, MIKI_DIR)
+    mikis_json = utils.get_mikis_json_for_all_pages(flatpages, MIKI_DIR)
     
     # find the folder and file name to get
     this_miki = next((item for item in mikis_json['nodes'] if item['id'] == file), None)
@@ -80,7 +81,7 @@ def contact_page():
 @app.route('/site-map.html')
 def site_map():
     posts = [p for p in flatpages if p.path.startswith(POST_DIR)]
-    mikis_json = utils.get_mikis_json(flatpages, MIKI_DIR)
+    mikis_json = utils.get_mikis_json_for_all_pages(flatpages, MIKI_DIR)
     
     mikis = sorted(mikis_json['nodes'], key=itemgetter('id'))
 
@@ -89,7 +90,7 @@ def site_map():
 @app.route('/site-map.xml')
 def site_map_xml():
     posts = [p for p in flatpages if p.path.startswith(POST_DIR)]
-    mikis_json = utils.get_mikis_json(flatpages, MIKI_DIR)
+    mikis_json = utils.get_mikis_json_for_all_pages(flatpages, MIKI_DIR)
     #return render_template('site-map.xml', posts=posts, mikis=mikis_json, today=date.today())
 
     template = render_template('site-map.xml', posts=posts, mikis=mikis_json, today=date.today())
@@ -121,7 +122,7 @@ def freeze_miki_pages():
                 shutil.copy('{}/{}'.format(root, f), 'build/static/media/{}'.format(f))
                 
     posts = [p for p in flatpages if p.path.startswith(POST_DIR)]
-    mikis = utils.get_mikis_json(flatpages, MIKI_DIR)
+    mikis = utils.get_mikis_json_for_all_pages(flatpages, MIKI_DIR)
 
     # get all posts
     for post in posts:

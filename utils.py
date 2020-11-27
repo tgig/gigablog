@@ -28,7 +28,13 @@ def wiki_image(text):
 def wiki_link(text):
     paths = wikilinks_to_path(text)
     for path in paths:
-        text = text.replace("[[{}]]".format(path['file_name']), '<a href="/miki/{}.html">{}</a>'.format(path['url'], path['file_name']))
+        # if there is a pipe (|) in the link, only link the last bit of the text
+        if "|" in path['file_name']:
+            link_text = path['file_name'].split('|')[-1]
+        else:
+            link_text = path['file_name']
+
+        text = text.replace("[[{}]]".format(path['file_name']), '<a href="/miki/{}.html">{}</a>'.format(path['url'], link_text))
 
     return text
     
@@ -63,7 +69,7 @@ def get_image_file(file, locs):
     return "static/img/nada.png"
 
 
-def get_mikis_json(flatpages, MIKI_DIR):
+def get_mikis_json_for_all_pages(flatpages, MIKI_DIR):
     mikis = [m for m in flatpages if m.path.startswith(MIKI_DIR)]
     # I need to deal with wikilinks, which flatpages does not like, so let's reset the meta for each page
     mikis = miki_reset_meta(mikis)

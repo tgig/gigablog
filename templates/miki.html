@@ -71,6 +71,6 @@
     <script src="{{ url_for('static', filename='js/graph.js') }}"></script>
     <script>
         graph = {{ mikis|safe }};
-        GraphRenderer("graphIt", graph, 640, 150, "node-folder", "node-file")
+        GraphRenderer("graphIt", graph, window.innerWidth - 30, 150, "node-folder", "node-file")
     </script>
 {% endblock %}
