@@ -33,25 +33,25 @@ def not_found(e):
 def index():
     return render_template('index.html')
 
-@app.route("/posts/")
+@app.route("/posts.html")
 def posts():
     posts = [p for p in flatpages if p.path.startswith(POST_DIR)]
     posts.sort(key=itemgetter('date'), reverse=True)
     return render_template('posts.html', posts=posts)
 
-@app.route('/posts/<name>/')
+@app.route('/posts/<name>.html')
 def post(name):
     path = '{}/{}'.format(POST_DIR, name)
     post = flatpages.get_or_404(path)
     return render_template('post.html', post=post)
 
-@app.route("/miki/")
+@app.route("/miki.html")
 def miki():
     # get all mikis to start with
     mikis_json = utils.get_mikis_json(flatpages, MIKI_DIR)
     return render_template('mikis.html', mikis=mikis_json)
 
-@app.route("/miki/<file>/")
+@app.route("/miki/<file>.html")
 def miki_page(file):
     mikis_json = utils.get_mikis_json(flatpages, MIKI_DIR)
     
@@ -73,11 +73,11 @@ def miki_page(file):
 
     return render_template('miki.html', miki=miki_json, mikis=mikis_json)
 
-@app.route('/contact/')
+@app.route('/contact.html')
 def contact_page():
     return render_template('contact.html')
 
-@app.route('/site-map/')
+@app.route('/site-map.html')
 def site_map():
     posts = [p for p in flatpages if p.path.startswith(POST_DIR)]
     mikis_json = utils.get_mikis_json(flatpages, MIKI_DIR)

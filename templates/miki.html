@@ -28,7 +28,7 @@
                     {% for source in miki.meta.source %}
                         <li>
                         {% if source.miki_id %}
-                            <a href="/miki/{{ source.miki_id|urlencode }}">{{ source.file_name }}</a>    
+                            <a href="/miki/{{ source.miki_id|urlencode }}.html">{{ source.file_name }}</a>    
                         {% else %}
                             {{ source }}
                         {% endif %}
@@ -54,7 +54,7 @@
                     <h5>Relevant:</h5>
                     <ul>
                     {% for r in miki.meta.relevant %}
-                        <li><a href="/miki/{{ r.miki_id|urlencode }}">{{ r.file_name }}</a></li>
+                        <li><a href="/miki/{{ r.miki_id|urlencode }}.html">{{ r.file_name }}</a></li>
                     {% endfor %}
                     </ul>
                 </div>

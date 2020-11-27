@@ -28,7 +28,7 @@ def wiki_image(text):
 def wiki_link(text):
     paths = wikilinks_to_path(text)
     for path in paths:
-        text = text.replace("[[{}]]".format(path['file_name']), '<a href="/miki/{}">{}</a>'.format(path['url'], path['file_name']))
+        text = text.replace("[[{}]]".format(path['file_name']), '<a href="/miki/{}.html">{}</a>'.format(path['url'], path['file_name']))
 
     return text
     
@@ -267,7 +267,7 @@ def clean_node_path(path):
         file_name = path
         miki_id = file_name.split(' ')[0]
         folder_id = 'External'
-        url = "{}/".format(miki_id)
+        url = "{}".format(miki_id)
     else:    
         bits = path.split('/')              # split into list
 
@@ -275,7 +275,7 @@ def clean_node_path(path):
         file_name = bits[-1]                # get the last bit with no folders
         miki_id = file_name.split(' ')[0]     # get the part with the decimal classification
         folder_id = miki_id.split('.')[0]
-        url = "{}/".format(miki_id)
+        url = "{}".format(miki_id)
 
 
     return {

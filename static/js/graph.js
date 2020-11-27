@@ -63,7 +63,7 @@ var GraphRenderer = function(svgId, graph, svgWidth, svgHeight, folderInfoDiv, f
         });
 
         node.on("click", function (node) {
-            window.location.href = "/miki/" + node.url;
+            window.location.href = "/miki/" + node.url + ".html";
         });
         
         node.on("mouseover", function(d) {

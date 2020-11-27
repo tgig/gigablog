@@ -8,7 +8,7 @@
         <h3>Blog Posts</h3>
         <ul>
         {% for post in posts %}
-            <li><a href="{{ post['path'] }}">{{ post.meta.title }}</a></li>    
+            <li><a href="{{ post['path'] }}.html">{{ post.meta.title }}</a></li>    
         {% endfor %}
         </ul>
     </div>
@@ -17,7 +17,7 @@
         <h3>Miki Pages</h3>
         <ul>
         {% for miki in mikis %}
-            <li>{{ miki['folderName'] }}: <a href="/miki/{{ miki['url'] }}">{{ miki['fileName'] }}</a></li>
+            <li>{{ miki['folderName'] }}: <a href="/miki/{{ miki['url'] }}.html">{{ miki['fileName'] }}</a></li>
         {% endfor %}
         </ul>
     </div>
