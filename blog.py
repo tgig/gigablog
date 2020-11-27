@@ -13,7 +13,7 @@ DEBUG = True
 FLATPAGES_AUTO_RELOAD = DEBUG
 FLATPAGES_EXTENSION = ['.md', '.html']
 FLATPAGES_ROOT = 'content'
-POST_DIR = 'posts'
+POST_DIR = 'POSTS'
 MIKI_DIR = 'MIKI'
 FLATPAGES_HTML_RENDERER = utils.my_renderer
 
