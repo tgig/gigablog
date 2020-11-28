@@ -11,14 +11,14 @@ import os
 import pdb
 
 def my_renderer(text):
-    wikid = wiki_me(text)
-    pygmented_body = markdown.markdown(wikid, extensions=['codehilite', 'fenced_code', 'tables', 'wikilinks', 'nl2br'])
-    return pygmented_body
+    text = wiki_me(text)
+    text = markdown.markdown(text, extensions=['codehilite', 'fenced_code', 'tables', 'wikilinks', 'nl2br'])
+    return text
 
 def wiki_me(text):
     text = wiki_image(text) # replace wikilinks images with <img src> tag
     text = wiki_link(text)  # replace wikilinks with <a href> link
-    text = url_link(text)   # replace http/s link with <a href> link
+    #text = url_link(text)   # replace http/s link with <a href> link
     return text
 
 def wiki_image(text):
@@ -52,15 +52,18 @@ def wikilinks_to_path(text):
 
     return paths
 
-def url_link(text):
-    # find any http/s links in the content and convert
-    regex = r'(https?://[^\s]+)'
-    links = re.findall(regex, text)
-    for link in links:
-        if '<a href="{}">'.format(link) not in text:
-            text = text.replace(link, '<a href="{}">{}</a>'.format(link, link))
+# def url_link(text):
+#     # find any http/s links in the content and convert
+#     #regex = r'(https?://[^\s]+)'
+#     regex = r'\b(([\w-]+://?|www[.])[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/)))'
+#     links = re.findall(regex, text)
+#     if len(links) > 0:
+#         pdb.set_trace()
+#     for link in links:
+#         if '<a href="{}">'.format(link) not in text:
+#             text = text.replace(link, '<a href="{}">{}</a>'.format(link, link))
     
-    return text
+#     return text
 
 
 # look in the myriad of folders that hold content to try and find an image
