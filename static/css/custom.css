@@ -128,13 +128,6 @@ body {
     color: #4d4d4d;
 }
 
-blockquote {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    padding-left: 15px;
-    border-left: 3px solid #ccc;
-  }
-
 
 /*
  * MikiS
@@ -148,6 +141,7 @@ blockquote {
     stroke: none;
     cursor: pointer;
   }
+
   
 
 /*

@@ -16,8 +16,9 @@ def my_renderer(text):
     return pygmented_body
 
 def wiki_me(text):
-    text = wiki_image(text)
-    text = wiki_link(text)
+    text = wiki_image(text) # replace wikilinks images with <img src> tag
+    text = wiki_link(text)  # replace wikilinks with <a href> link
+    text = url_link(text)   # replace http/s link with <a href> link
     return text
 
 def wiki_image(text):
@@ -40,7 +41,7 @@ def wiki_link(text):
     
 
 def wikilinks_to_path(text):
-    # find all links in the html and read into array
+    # find all wikilinks in the html and read into array
     links = re.findall(r'\[\[(.*?)\]\]', text)
     paths = []
 
@@ -51,6 +52,15 @@ def wikilinks_to_path(text):
 
     return paths
 
+def url_link(text):
+    # find any http/s links in the content and convert
+    regex = r'(https?://[^\s]+)'
+    links = re.findall(regex, text)
+    for link in links:
+        if '<a href="{}">'.format(link) not in text:
+            text = text.replace(link, '<a href="{}">{}</a>'.format(link, link))
+    
+    return text
 
 
 # look in the myriad of folders that hold content to try and find an image
@@ -78,7 +88,6 @@ def get_mikis_json_for_all_pages(flatpages, MIKI_DIR):
 
 
 def get_miki_json_for_js(miki):
-
     miki = miki_reset_meta(miki)
     path = clean_node_path(miki.path)
 
@@ -95,7 +104,7 @@ def get_miki_json_for_js(miki):
     }
     return miki_json
 
-def get_mikis_json_for_miki_id(miki_id, mikis_json):
+def get_mikis_graph_for_miki_id(miki_id, mikis_json):
     # we want to return any backlinks and forelinks that have anything to do with the passed in miki_id
 
     miki_index = next((index for (index, d) in enumerate(mikis_json['nodes']) if d['id'] == miki_id), None)
@@ -135,8 +144,8 @@ def miki_reset_meta_work(miki):
     for path in paths:
         miki._meta = miki._meta.replace("[[{}]]".format(path['file_name']), str(path))
 
-
-    miki._meta = miki._meta.replace('#', '') # remove hash tags, they are invalid yaml
+    # remove hash tags, they are invalid yaml
+    miki._meta = miki._meta.replace('#', '') 
     
     if miki.meta:
         miki.meta = yaml.safe_load(miki._meta)
