@@ -149,16 +149,19 @@ def freeze_miki_pages():
             if f.endswith('.png') or f.endswith('.jpg') or f.endswith('.gif'):
                 shutil.copy('{}/{}'.format(root, f), 'build/static/media/{}'.format(f))
                 
-    posts = [p for p in flatpages if p.path.startswith(POST_DIR)]
-    mikis = utils.get_mikis_json_for_all_pages(flatpages, MIKI_DIR)
+    posts = [p for p in flatpages if p.path.startswith(POST_DIR)]   # get posts
+    mikis = utils.get_mikis_json_for_all_pages(flatpages, MIKI_DIR) # get miki pages
 
     # get all posts
     for post in posts:
         yield '/{}.html'.format(post.path)
-    
+
+    folder_id = ""
     for miki in mikis['nodes']:
         yield '/miki/{}.html'.format(miki['url'])
 
+        if miki['folderId'] != folder_id:
+            yield '/miki/folder/{}.html'.format(miki['folderId'])
 
 
 ### MAIN ###
