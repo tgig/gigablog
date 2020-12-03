@@ -19,7 +19,7 @@ When people ask me what I do for a living, I usually tell them that I'm a progra
 - I'm also an **entrepreneur** - I've started and sold multiple tech companies, but probably nothing that you'd know the name of.
 - I'm a **product manager** - I've helped friends and startups bring wonderful new products into the world across wildly different categories (Blockchain, AI, data science)
 
-But most of all, **I'm a learner**. And this site is an attempt to organize my knowledge, share it with the world, and live my [[106.005 About me - My life mission|my life's mission]].
+But most of all, **I love to learn and build**. And this site is an attempt to organize my knowledge, share it with the world, and live my [[106.005 About me - My life mission|my mission]].
 
 
 ## Why I needed a custom website
