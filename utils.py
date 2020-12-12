@@ -116,13 +116,19 @@ def get_mikis_graph_for_miki_id(miki_id, mikis_json):
     mikis_json['nodes'][miki_index]["mass"] = 10
 
     # find all links with source or target of this miki_id
+    # this gives us all the links from/to the primary object
     keep_links = [x for x in mikis_json['links'] if x['source'] == miki_id or x['target'] == miki_id]
+
+    # we also want links between the non-primary objects
+    keep_links_detail = [x['source'] for x in keep_links] + [x['target'] for x in keep_links]
+    keep_links = [x for x in mikis_json['links'] if x['source'] in keep_links_detail and x['target'] in keep_links_detail]
+
+    #pdb.set_trace()
 
     # remove every link not in the list
     mikis_json['links'] = keep_links
 
     # keep only nodes that are in the links
-    keep_links_detail = [x['source'] for x in keep_links] + [x['target'] for x in keep_links]
     keep_nodes = [x for x in mikis_json['nodes'] if x['id'] in keep_links_detail]
     mikis_json['nodes'] = keep_nodes
 
