@@ -81,7 +81,7 @@ def miki_page(file):
     miki = flatpages.get_or_404(path)
     
     miki_json = utils.get_miki_json_for_js(miki)
-    mikis_json = utils.get_mikis_graph_for_miki_id(miki_json['path']['mikiId'], mikis_json)
+    mikis_json = utils.get_mikis_graph_for_miki_ids([miki_json['path']['mikiId']], mikis_json)
 
     return render_template('miki.html', miki=miki_json, mikis=mikis_json)
 
@@ -99,7 +99,11 @@ def miki_folder(folder):
     #files_json = dict(sorted(files_json.items())) # sort
     files_json.sort(key=itemgetter('id'))
 
-    return render_template('miki-folder.html', files=files_json, folder=files_json[0])
+    # get nodes and links for graph
+    miki_ids = [x['id'] for x in files_json]
+    mikis_json = utils.get_mikis_graph_for_miki_ids(miki_ids, mikis_json)
+
+    return render_template('miki-folder.html', files=files_json, folder=files_json[0], mikis=mikis_json)
     
 
 @app.route('/contact.html')

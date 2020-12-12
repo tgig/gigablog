@@ -2,9 +2,13 @@
 {% block title %}{{ folder.folderName }}{% endblock %}
 {% block body %}
 
-    <h1>{{ folder.folderName }}</h1>
+    <h1 class="mb-0">{{ folder.folderName }}</h1>
 
     <div class="container">
+
+        <div class="text-center" id="node-file" style="height: 20px;">&nbsp;</div>
+        <svg id="graphIt"></svg>
+
         <ul>
         {% for file in files %}
             <li><a href="/miki/{{ file.id }}.html">{{ file.fileName }}</a></li>
@@ -14,6 +18,10 @@
 
 {% endblock %}
 {% block script %}
-
-    
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="{{ url_for('static', filename='js/graph.js') }}"></script>
+    <script>
+        graph = {{ mikis|safe }};
+        GraphRenderer("graphIt", graph, document.getElementById("main").getElementsByClassName("container")[0].offsetWidth, 150, null, "node-file")
+    </script>
 {% endblock %}

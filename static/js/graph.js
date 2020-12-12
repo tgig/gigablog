@@ -84,7 +84,6 @@ var GraphRenderer = function(svgId, graph, svgWidth, svgHeight, folderInfoDiv, f
             }
         });
 
-        //simulation.nodes(graph.nodes).on("tick", ticked);
         simulation.nodes(graph.nodes).on("tick", function() {
             link.attr("x1", function (d) {
                 return d.source.x;

@@ -107,17 +107,17 @@ def get_miki_json_for_js(miki):
     }
     return miki_json
 
-def get_mikis_graph_for_miki_id(miki_id, mikis_json):
+def get_mikis_graph_for_miki_ids(miki_ids, mikis_json):
     # we want to return any backlinks and forelinks that have anything to do with the passed in miki_id
 
-    miki_index = next((index for (index, d) in enumerate(mikis_json['nodes']) if d['id'] == miki_id), None)
-
-    # set the mass for the passed in miki_id so it rests in the center
-    mikis_json['nodes'][miki_index]["mass"] = 10
+    # if only one miki_id was passed in, set the mass for the passed in miki_id so it rests in the center
+    if len(miki_ids) == 1:
+        miki_index = next((index for (index, d) in enumerate(mikis_json['nodes']) if d['id'] == miki_ids[0]), None)
+        mikis_json['nodes'][miki_index]["mass"] = 10
 
     # find all links with source or target of this miki_id
     # this gives us all the links from/to the primary object
-    keep_links = [x for x in mikis_json['links'] if x['source'] == miki_id or x['target'] == miki_id]
+    keep_links = [x for x in mikis_json['links'] if x['source'] in miki_ids or x['target'] in miki_ids]
 
     # we also want links between the non-primary objects
     keep_links_detail = [x['source'] for x in keep_links] + [x['target'] for x in keep_links]
