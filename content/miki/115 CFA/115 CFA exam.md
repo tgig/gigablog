@@ -1,6 +1,7 @@
 source: Me
 tags: 
 relevant: 
+- [[115.150 BA II Plus Calculator config]]
 
 # CFA Exam
 
