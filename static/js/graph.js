@@ -99,9 +99,10 @@ var GraphRenderer = function(svgId, graph, svgWidth, svgHeight, folderInfoDiv, f
             });
 
             node.attr("cx", function (d) {
-                return (d.x = Math.max(radius, Math.min(width - radius, d.x)));
+                //return (d.x = Math.max(radius, Math.min(width - radius, d.x)));
+                return d.x;
             }).attr("cy", function (d) {
-                return (d.y = Math.max(radius, Math.min(height - radius, d.y)));
+                return d.y;
             });
         })
 
