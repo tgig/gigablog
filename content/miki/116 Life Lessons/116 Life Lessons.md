@@ -67,7 +67,7 @@ relevant:
 - [[116.060 Life Lessons - Write a business plan]]
 - [[116.061 Life Lessons - Fire fast]]
 - [[116.062 Life Lessons - Work with people you are in awe of]]
-- [[116.062 Life Lessons - Only hire proven doers for top-level jobs]]
+- [[116.092 Life Lessons - Only hire proven doers for top-level jobs]]
 - [[116.063 Life Lessons - Industry is destiny]]
 - [[116.064 Life Lessons - Build products don't bill hours]]
 - [[116.065 Life Lessons - Take a human desire and take out steps]]
