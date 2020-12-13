@@ -1,0 +1,27 @@
+name: Push content to gig-a-blog
+
+on:
+  push:
+    branches: main
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    
+    - name: Push MIKI/POSTS files to Gigablog
+      uses: crykn/copy_folder_to_another_repo_action@v1.0.5b
+      env:
+        API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+      with:
+        source_folder: '.'
+        destination_repo: 'tgig/gigablog'
+        destination_folder: 'content'
+        user_email: tgiggy@gmail.com
+        user_name: 'tgig'
+        commit_msg: "Moving files from MIKI to Gigablog"
+        destination_branch: main
