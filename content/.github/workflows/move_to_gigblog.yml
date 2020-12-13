@@ -1,0 +1,32 @@
+name: Push content to gig-a-blog
+
+on:
+  push:
+    branches: main
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: Checkout source repo
+      uses: actions/checkout@v2
+      with:
+        path: source-repo
+    
+    - name: Checkout target repo
+      uses: actions/checkout@v2
+      with:
+        repository: tgig/gigablog
+        path: target-repo
+        token: ${{ secrets.API_TOKEN_GITHUB }}
+    
+    - name: Sync the repo
+      id: sync
+      uses: tomasdelvechio/actions-push-repo-to-subdir@v1.2.0
+      with:
+        github-username: 'tgig'
+        target-subdir-name: 'content'
+
