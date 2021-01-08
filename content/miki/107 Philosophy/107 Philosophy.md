@@ -9,4 +9,4 @@ relevant:
 # Philosophy is the love of wisdom
 
 [[107.010 Philosophy - Stoicism]]
-[[107.011 Philosophy - Stoicism - Today is mine]]
+[[107.016 Philosophy - Stoicism - Today is mine]]

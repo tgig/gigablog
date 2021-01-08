@@ -6,7 +6,6 @@ relevant:
 - [[116 Life Lessons]]
 
 # About me
-
 - [[106.001 About me - Bio]]
 - [[106.003 About me - Adinkra fern symbol]]
 - [[106.004 About me - Professional things I'm currently interested in]]
@@ -15,3 +14,5 @@ relevant:
 # Life mission
 [[106.005 About me - My life mission]]
 
+# Life philosophy
+[[106.007 About me - Life philosophy]]

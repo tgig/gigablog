@@ -96,5 +96,5 @@ relevant:
 - [[116.088 Life Lessons - Small teams must stay focused]]
 - [[116.089 Life Lessons - Empower people to do their jobs and take risks]]
 - [[116.090 Life Lessons - Know the difference between a lifestyle and a VC business]]
-- [[116.091 Life Lessons - The Rule of 3]]
+- [[116.091 Life Lessons - Culture - The Rule of 3]]
 
