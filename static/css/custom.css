@@ -24,6 +24,7 @@ a:hover {
 /* Headers */
 h1, h2, h3, h4, h5 {
     font-family: 'Roboto Slab', sans-serif;
+    font-size: 4em;
 }
 h1 {
     text-align: center;
@@ -31,7 +32,8 @@ h1 {
     margin-bottom: 40px;
 }
 h2, h3, h4, h5 {
-    font-weight: 100;
+    font-weight: bold;
+    margin-top: 20px;
     margin-bottom: 20px;
 }
 h5 {
