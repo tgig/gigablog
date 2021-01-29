@@ -47,9 +47,11 @@ var GraphRenderer = function(svgId, graph, svgWidth, svgHeight, folderInfoDiv, f
             .enter()
             .append("circle")
             .attr("r", function (d) { return d.mass })
-            .style("fill", function (d) {
-                return d.color;
-            })
+            .style("fill", function (d) { return d.color; })
+            .style("fill-opacity", 0.8)
+            .attr("stroke", "#b8b8b8")
+            .attr("stroke-opacity", 1)
+            .style("stroke-width", 1)
             .call(
                 d3
                     .drag()
@@ -98,15 +100,17 @@ var GraphRenderer = function(svgId, graph, svgWidth, svgHeight, folderInfoDiv, f
                 return d.target.y;
             });
 
-            node.attr("cx", function (d) {
+            node
+            .attr("cx", function (d) {
                 //return (d.x = Math.max(radius, Math.min(width - radius, d.x)));
                 return d.x;
-            }).attr("cy", function (d) {
+            })
+            .attr("cy", function (d) {
                 return d.y;
             });
         })
 
-        simulation.force("link").links(graph.links).strength(3);
+        simulation.force("link").links(graph.links).strength(2);
 
         
     }, 1000);

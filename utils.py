@@ -112,8 +112,8 @@ def get_mikis_graph_for_miki_ids(miki_ids, mikis_json):
 
     # if only one miki_id was passed in, set the mass for the passed in miki_id so it rests in the center
     if len(miki_ids) == 1:
-        miki_index = next((index for (index, d) in enumerate(mikis_json['nodes']) if d['id'] == miki_ids[0]), None)
-        mikis_json['nodes'][miki_index]["mass"] = 10
+        increment_miki_node_mass(mikis_json['nodes'], miki_ids[0], 10)
+        
 
     # find all links with source or target of this miki_id
     # this gives us all the links from/to the primary object
@@ -253,13 +253,16 @@ def miki_get_graph(mikis):
     # 3. add new nodes (from the edges)
     node_ids = [node['id'] for node in graph_json['nodes']]
     for link in graph_json['links']:
+
         if link['source'] not in node_ids:
             node_path = clean_node_path(link['source'])
             node_json = make_graph_json_node(node_path, "#CCCCCC")
             graph_json["nodes"].append(node_json)
             node_ids.append(link['source'])
 
-        if link['target'] not in node_ids:
+        if link['target'] in node_ids:
+            increment_miki_node_mass(graph_json['nodes'], link['target'])
+        else:
             node_path = clean_node_path(link['target'])
             node_json = miki_get_graph_node_json(node_path, "#CCCCCC")
             graph_json["nodes"].append(node_json)
@@ -271,7 +274,7 @@ def miki_get_graph(mikis):
 def miki_get_graph_node_json(node_path, color):
     return {
         "id": node_path['miki_id'],
-        "mass": 5,
+        "mass": 3,
         "color": color, 
         "origColor": color,
         "folderId": node_path['folder_id'], 
@@ -280,7 +283,15 @@ def miki_get_graph_node_json(node_path, color):
         "url": node_path['url']
     }
     
+def increment_miki_node_mass(mikis_json, miki_id, mass=0):
+    miki_index = next((index for (index, d) in enumerate(mikis_json) if d['id'] == miki_id), None)
 
+    if mass == 0:
+        mass = mikis_json[miki_index]["mass"]
+        if mass < 20:
+            mass = mass + 1
+        
+    mikis_json[miki_index]["mass"] = mass
 
 
 # this works only because of my anal naming convention - every single file has a unique identifier in front of if

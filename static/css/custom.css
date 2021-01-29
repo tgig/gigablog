@@ -139,7 +139,6 @@ body {
   
   .nodes circle {
     pointer-events: all;
-    stroke: none;
     cursor: pointer;
   }
 
