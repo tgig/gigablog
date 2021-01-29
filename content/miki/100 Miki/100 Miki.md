@@ -27,7 +27,7 @@ A miki is like a wiki, but only for me.
 - [[116 Life Lessons]]
 - [[117 Social Media Marketing]]
 - [[118 People]]
-- [[119 Constructive Conflict]]
+- [[119 Communication]]
 - [[120 Linux]]
 - [[121 Python]]
 - [[122 Product Management]]
@@ -36,4 +36,5 @@ A miki is like a wiki, but only for me.
 - [[125 Books]]
 - [[126 Decision Making]]
 - [[127 Scientific Method]]
+- [[128 Management]]
 

@@ -14,3 +14,4 @@ relevant:
 - [[125.008 Books - Constructive Conflict - Keith Wilson]]
 - [[125.009 Books - Nonviolent Communication - Marshall B Rosenberg]]
 - [[125.010 Books - Inspired - Marty Cagan]]
+- [[125.011 Books - High Output Management by Andy Grove]]

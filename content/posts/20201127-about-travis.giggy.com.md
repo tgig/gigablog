@@ -30,7 +30,7 @@ I've always been a prolific writer - it helps me to organize my thoughts and com
 
 And the same thing for reading. I read _a lot_, usually 20+ non-fiction books per year. The new reading is always more readily available in my mind than the old reading. I always hoped that my subconscious was hanging on to the old reading and would make it available when necessary, but that's a bad strategy for learning!
 
-So, in an attempt to lay down a foundation of knowledge, a method of retention, earlier this year I picked up the [[101 Zettelkasten|Zettelkasten method]] of note taking. Through several starts and stops, I have turned it into my own, and already have 700+ individual notes on topics as diverse as [[108 Data Analysis|data science]], [[115 CFA exam|finance]], [[126.001 Decision Making - Expected Value|decision making]], [[119 Constructive Conflict|constructive conflict]], and more.
+So, in an attempt to lay down a foundation of knowledge, a method of retention, earlier this year I picked up the [[101 Zettelkasten|Zettelkasten method]] of note taking. Through several starts and stops, I have turned it into my own, and already have 700+ individual notes on topics as diverse as [[108 Data Analysis|data science]], [[115 CFA exam|finance]], [[126.001 Decision Making - Expected Value|decision making]], [[119 Communication|constructive conflict]], and more.
 
 The unique, interlinked structure of this repository of knowledge required that I build something unique to leverage it. There is no Medium, Tumblr, Substack, etc, platform that was built for a graph of personal knowledge, so I had to build it myself. (Which is not surprising, because clearly not very many people want/need this level of know-org!)
 
