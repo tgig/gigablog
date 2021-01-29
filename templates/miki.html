@@ -72,6 +72,17 @@
     <script src="{{ url_for('static', filename='js/graph.js') }}"></script>
     <script>
         graph = {{ mikis|safe }};
-        GraphRenderer("graphIt", graph, document.getElementById("main").getElementsByClassName("container")[0].offsetWidth, 150, "node-folder", "node-file")
+        //scale height of graph based on number of nodes
+        var svgHeight = 150;
+        nodeCount = graph.nodes.length;
+        if (nodeCount > 400)
+            svgHeight = 500;
+        else if (nodeCount > 250)
+            svgHeight = 400;
+        else if (nodeCount > 100)
+            svgHeight = 250;
+        else if (nodeCount > 50)
+            svgHeight = 200;
+        GraphRenderer("graphIt", graph, document.getElementById("main").getElementsByClassName("container")[0].offsetWidth, svgHeight, "node-folder", "node-file")
     </script>
 {% endblock %}
