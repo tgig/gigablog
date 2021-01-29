@@ -97,4 +97,9 @@ relevant:
 - [[116.089 Life Lessons - Empower people to do their jobs and take risks]]
 - [[116.090 Life Lessons - Know the difference between a lifestyle and a VC business]]
 - [[116.091 Life Lessons - Culture - The Rule of 3]]
+- [[116.092 Life Lessons - Only hire proven doers for top-level jobs]]
+- [[116.093 Life Lessons - Independent Thinking - Curiosity]]
+- [[116.094 Life Lessons - Empathy first, feelings second, needs last]]
+- [[116.095 Life Lessons - The ability to observe without evaluating]]
+- [[116.096 Life Lessons - When emotions override my higher consciousness]]
 
