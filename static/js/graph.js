@@ -24,7 +24,7 @@ var GraphRenderer = function(svgId, graph, svgWidth, svgHeight, folderInfoDiv, f
                                             return d.id;
                                         }))
         .force("charge", d3.forceManyBody().strength(-50))
-        .force("collision", d3.forceCollide().radius(radius + 4))
+        .force("collision", d3.forceCollide().radius(function(d) { return d.mass + 4 }))
         .force("center", d3.forceCenter(width / 2, height / 2))
         .force("x", d3.forceX(width / 2).strength(0.2))
         .force("y", d3.forceY(height / 2).strength(0.3));
@@ -110,7 +110,7 @@ var GraphRenderer = function(svgId, graph, svgWidth, svgHeight, folderInfoDiv, f
             });
         })
 
-        simulation.force("link").links(graph.links).strength(2);
+        simulation.force("link").links(graph.links).strength(5);
 
         
     }, 1000);

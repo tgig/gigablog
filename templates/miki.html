@@ -3,6 +3,7 @@
 {% block body %}
 
     <div class="container">
+        <h3 style="text-align: center;"><a href="/miki.html">GIGAMIND</a></h3>
         <div id="info" style="height: 50px;">
             <div class="row">
                 <div class="col-2">Folder:</div>
@@ -73,7 +74,7 @@
     <script>
         graph = {{ mikis|safe }};
         //scale height of graph based on number of nodes
-        var svgHeight = 150;
+        var svgHeight;
         nodeCount = graph.nodes.length;
         if (nodeCount > 400)
             svgHeight = 500;
@@ -83,6 +84,8 @@
             svgHeight = 250;
         else if (nodeCount > 50)
             svgHeight = 200;
+        else 
+            svgHeight = 150;
         GraphRenderer("graphIt", graph, document.getElementById("main").getElementsByClassName("container")[0].offsetWidth, svgHeight, "node-folder", "node-file")
     </script>
 {% endblock %}
