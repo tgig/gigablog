@@ -104,4 +104,5 @@ relevant:
 - [[116.096 Life Lessons - When emotions override my higher consciousness]]
 - [[116.097 Life Lessons - The best leaders are problem solvers]]
 - [[116.098 Life Lessons - Distinguish between what I feel and what I think others feel]]
+- [[116.099 Life Lessons - Stanford - The Questions]]
 

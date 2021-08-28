@@ -1,6 +1,8 @@
 .DS_Store
 .obsidian
+.trash
 _PROCESSED NOTES/
 _UNPROCESSED NOTES/
+_TODO/
 templates/
 *.swp
