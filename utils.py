@@ -156,22 +156,24 @@ def miki_reset_meta_work(miki):
     # remove hash tags, they are invalid yaml
     miki._meta = miki._meta.replace('#', '') 
     
-    if miki.meta:
-        miki.meta = yaml.safe_load(miki._meta)
+    try:
+        if miki.meta:
+            miki.meta = yaml.safe_load(miki._meta)
 
-        # make sure the source, keywords, and relevant links are lists, not strings
-        if 'source' in miki.meta.keys():
-            if type(miki.meta['source']) == str or type(miki.meta['source']) == dict:
-                miki.meta['source'] = [miki.meta['source']]
-        
-        if 'tags' in miki.meta.keys():
-            if type(miki.meta['tags']) == str:
-                miki.meta['tags'] = [miki.meta['tags']]
-        
-        if 'relevant' in miki.meta.keys():
-            if type(miki.meta['relevant']) == str:
-                miki.meta['relevant'] = [miki.meta['relevant']]
-
+            # make sure the source, keywords, and relevant links are lists, not strings
+            if 'source' in miki.meta.keys():
+                if type(miki.meta['source']) == str or type(miki.meta['source']) == dict:
+                    miki.meta['source'] = [miki.meta['source']]
+            
+            if 'tags' in miki.meta.keys():
+                if type(miki.meta['tags']) == str:
+                    miki.meta['tags'] = [miki.meta['tags']]
+            
+            if 'relevant' in miki.meta.keys():
+                if type(miki.meta['relevant']) == str:
+                    miki.meta['relevant'] = [miki.meta['relevant']]
+    except Exception:
+        raise Exception("ERROR with miki.meta: {}".format(miki.path))
     
     return miki
 
