@@ -150,7 +150,7 @@ def freeze_miki_pages():
     # copy all images that are int the /content folders to the /static/media folder
     for root, subdirs, files in os.walk('content/'):
         for f in files:
-            if f.endswith('.png') or f.endswith('.jpg') or f.endswith('.gif'):
+            if f.endswith('.png') or f.endswith('.jpg') or f.endswith('.gif') or f.endswith('.mp4'):
                 shutil.copy('{}/{}'.format(root, f), 'build/static/media/{}'.format(f))
                 
     posts = [p for p in flatpages if p.path.startswith(POST_DIR)]   # get posts
@@ -172,6 +172,8 @@ def freeze_miki_pages():
 
 if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] == "build":
-        freezer.freeze()
+        # verbose, will output every file to the log
+        for page in freezer.freeze_yield():
+            print(page.url)
     else:
         app.run(host='0.0.0.0', port=8000, debug=True)
