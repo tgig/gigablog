@@ -6,11 +6,13 @@ type: essay
 
 # Baseball and asymmetry
 
+![[20210828-baseball-dirt.jpeg]]
+
 This is a story of the difference between somebody who goes to work at a normal [job-type-job](https://www.youtube.com/watch?v=DU0_XCfxHyg) every day for a career, invests into their 401K, and takes 2-weeks of vacation per year, versus somebody who starts small companies hoping they turn into larger companies and eventually result in an exit and a financial windfall.
 
 ---
 
-At a young age, I made the decision to NOT invest in my 401K plan, and instead spend that money on programming books and web servers in order to pursue tech startups. I've often been the first technical architect in a tech startup, which for me is the same thing. I'm all-in on [[106.008 About me - Equity and Asymmetry]], swinging for the fences.
+At a young age, I made the decision to NOT invest in my 401K plan, and instead spend that money on programming books and web servers in order to pursue tech startups. I've often been the first technical architect in a tech startup, which for me is the same thing. I'm all-in on [[106.008 About me - Equity and Asymmetry|asymmetry]], swinging for the fences.
 
 ---
 
