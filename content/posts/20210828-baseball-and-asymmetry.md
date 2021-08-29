@@ -1,5 +1,5 @@
-title: Who to hire
-desc: This could just as easily be titled - Who to be friends with, Who to hang out with, Who to admire, ...
+title: Baseball and asymmetry
+desc: This is a story of two different types of careers
 image: 
 date: 2021-08-28
 type: essay
