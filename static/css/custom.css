@@ -76,8 +76,14 @@ body {
  * Header
  */
  .masthead-brand {
-    color: #e84a45;
+    color: #e84a45 !important;
  }
+
+ .bg-opacity {
+     background-color: rgba(242, 242, 242, 0.6);
+     border-radius: 15px;
+ }
+
 
 @media (max-width: 47.9em) {
     .masthead {

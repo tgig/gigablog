@@ -3,6 +3,7 @@
 
 <head>
     <title>{% block title %}Travis Giggy{% endblock %}</title>
+    <meta name="description" content="{% block description %}{% endblock %}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="/static/img/favicon.ico" type="image/x-icon">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -25,13 +26,12 @@
 
 <body class="min-vh-100 d-flex flex-column">
 
-        <div class="container d-flex flex-column flex-md-row align-items-center p-3 mt-2 mb-2 mx-auto">
-            <h3 class="my-0 mr-md-auto masthead-brand">Travis Giggy</h3>
+        <div id="header-menu" class="container d-flex flex-column flex-md-row align-items-center p-3 mt-2 mb-2 mx-auto" style="z-index: 1;">
+            <h3 class="my-0 mr-md-auto bg-opacity"><a href="/" class="masthead-brand">Travis Giggy</a></h3>
             <nav class="my-2 my-md-0 mr-md-3">
-                <a class="p-2 text-dark" href="/">Home</a>
-                <a class="p-2 text-dark" href="/posts.html">Blog</a>
-                <a class="p-2 text-dark" href="/miki.html">GIGAMIND</a>
-                <a class="p-2 text-dark" href="/contact.html">Contact</a>
+                <a class="p-2 text-dark bg-opacity" href="/posts.html">Blog</a>
+                <a class="p-2 text-dark bg-opacity" href="/miki/106.html">About Me</a>
+                <a class="p-2 text-dark bg-opacity" href="/contact.html">Contact</a>
             </nav>
         </div>
 
@@ -41,7 +41,7 @@
             {% block body %}{% endblock %}
         </main>
 
-        <footer class="container mt-auto mx-auto mb-3 pt-2">
+        <footer class="container mt-auto mx-auto mb-3 pb-3 pt-2">
             <div class="row">
                 <div class="col text-center text-nowrap">&#169; Travis Giggy</div>
                 <div class="col text-center"><a href="/contact.html"><img src="{{ url_for('static', filename='img/email-1-240.png') }}" height="20" /></a></div>

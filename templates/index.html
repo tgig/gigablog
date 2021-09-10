@@ -1,38 +1,41 @@
 {% extends "layout.html" %}
 {% block title %}Travis Giggy: Brain on Code{% endblock %}
+{% block description %}Welcome to my visual knowledge graph. 25 years of lessons learned while growing as a husband, father, coder, entrepreneur.{% endblock %}
 {% block body %}
 
-    <div class="jumbotron mb-0">
-        <div class="container">
-            <h2>I've spent 25 years creating beautiful and usable software as a programmer, product manager, and entrepreneur. </h2>
-        </div>
+    <svg id="graphIt" style="position: relative;"></svg>
 
-       
+    <div id="folderTable" class="container text-center">
+        <table class="table">
+            <tr>
+                <th colspan="2">Folder</th>
+                <td>File Count</td>
+            </tr>
+        {% for folder in folders.keys() %}
+            <tr>
+                <td>
+                    <svg height="20" width="20">
+                        <circle cx="10" cy="10" r="8" stroke="#CCCCCC" stroke-width="1" fill="{{ folders[folder].color }}" />
+                    </svg>
+                </td>
+                <td class="text-left"><a href="/miki/folder/{{ folders[folder].folderId }}.html">{{ folder }}</a></td>
+                <td>{{ folders[folder].count }}</td>
+            </tr>
+        {% endfor %}
+        </table>
     </div>
 
-    
-    <div class="container p-5">
-        <div class="row">
-            <div class="col-md-6 col-sm-12">
-                <h2><a href="/posts.html" class="text-dark">Blog</a></h2>
-            </div>
-            <div class="col-md-6 col-sm-12">
-                <a href="/posts/20201127-about-travis.giggy.com.html">This site exists</a> so that I can <a href="/posts.html">blog</a> about my craft, my family, and my adventures. I write about the myriad of things I'm interested in, and some life lessons in case my kids ever feel like reading them in the future.
-            </div>
-        </div>
-    </div>
+{% endblock %}
+{% block script %}
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="{{ url_for('static', filename='js/graph.js') }}"></script>
+    <script>
+        graph = {{ mikis|safe }};
         
-    <div class="bg-white">
-        <div class="container p-5">
-            <div class="row">
-                <div class="col-md-6 col-sm-12">
-                    <h2><a href="/miki.html" class="text-dark">GIGAMIND</a></h2>
-                </div>
-                <div class="col-md-6 col-sm-12">
-                    I write. <a href="/miki/101.017.html">A lot.</a> GIGAMIND is a personal Wiki, <a href="/miki/101.020.html">but only for me</a>. It is based on the <a href="/miki/101.html">Zettelkasten method</a>, with many thanks to the Internet pioneers who helped me form my own technique.
-                </div>
-            </div>
-        </div>
-    </div>
+        var svgWidth = document.body.clientWidth;
+        var svgHeight = document.body.clientHeight;
+        document.getElementById("graphIt").style.top = -1 * document.getElementById("header-menu").clientHeight;
 
+        GraphRenderer("graphIt", graph, svgWidth, svgHeight, "node-folder", "node-file")
+    </script>
 {% endblock %}
