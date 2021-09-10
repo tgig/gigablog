@@ -60,23 +60,6 @@ def post(name):
     
     return render_template('post.html', post=post)
 
-@app.route("/miki.html")
-def miki():
-    # get all mikis to start with
-    mikis_json = utils.get_mikis_json_for_all_pages(flatpages, MIKI_DIR)
-
-    # loop through and get the number of files in each folder
-    folder_json = {}
-    for miki in mikis_json['nodes']:
-        if miki['folderName'] not in folder_json.keys():
-            folder_json[miki['folderName']] = { "count": 1, "color": miki['color'], "folderId": miki['folderId'] }
-        else:
-            folder_json[miki['folderName']]['count'] += 1
-
-    folder_json = dict(sorted(folder_json.items()))     # sort
-
-    return render_template('mikis.html', mikis=mikis_json, folders=folder_json)
-
 @app.route("/miki/<file>.html")
 def miki_page(file):
     mikis_json = utils.get_mikis_json_for_all_pages(flatpages, MIKI_DIR)
