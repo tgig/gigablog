@@ -41,7 +41,7 @@ The unique, interlinked structure of this repository of knowledge required that 
 
 This website is organized into two primary sections:
 1. [The blog](https://travis.giggy.com/posts.html)
-2. [The Miki](https://travis.giggy.com/miki.html)
+2. [The Miki](https://travis.giggy.com)
 
 ### The blog
 
@@ -51,7 +51,7 @@ The blog is composed of essays (like this one), photos, and quotes. I write in m
 
 My "Miki" is a wiki, but just for me. I write prolific notes from my own thoughts, from articles that I read online, from book highlights on my kindle, then extract atomic individual thoughts into many interlinked notes. Each note gets it's own unique name, `yaml` header, and markdown content. It is in a folder, has links to other relevant notes, tags, etc. Just like the blog, when I commit and push the content to github it is automatically merged into the live website. I have just as many private and random notes in my local repository as public organized notes, but only the ones that have been organized into the Miki get pushed live.
 
-The Miki manifests as a [force directed layout graph](https://travis.giggy.com/miki.html) on the website. You can visualize how notes interlink and form groups of knowledge. It's easy for me to see how things link together, click through them, and explore.
+The Miki manifests as a [force directed layout graph](https://travis.giggy.com) on the website. You can visualize how notes interlink and form groups of knowledge. It's easy for me to see how things link together, click through them, and explore.
 
 ## A work in progress
 
