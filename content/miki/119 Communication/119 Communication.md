@@ -83,3 +83,7 @@ I am far from mastering the art of NVC. It is simple on the surface, but mastery
 [[119.058 NVC - Punishing somebody is a terrible way to get what I want]]
 [[119.059 NVC - When others hear blame they shut down and defend themselves]]
 [[119.060 NVC - Help others through conflict by helping them understand needs and conflicts ]]
+
+## Effective communication
+
+[[119.061 Effective - Effective communication]]
