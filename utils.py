@@ -52,20 +52,6 @@ def wikilinks_to_path(text):
 
     return paths
 
-# def url_link(text):
-#     # find any http/s links in the content and convert
-#     #regex = r'(https?://[^\s]+)'
-#     regex = r'\b(([\w-]+://?|www[.])[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/)))'
-#     links = re.findall(regex, text)
-#     if len(links) > 0:
-#         pdb.set_trace()
-#     for link in links:
-#         if '<a href="{}">'.format(link) not in text:
-#             text = text.replace(link, '<a href="{}">{}</a>'.format(link, link))
-    
-#     return text
-
-
 # look in the myriad of folders that hold content to try and find an image
 def get_image_file(file, locs):
     # get a list of all the media files we have
@@ -134,6 +120,39 @@ def get_mikis_graph_for_miki_ids(miki_ids, mikis_json):
 
     return mikis_json
 
+def get_mikis_folders(miki_nodes):
+    # loop through and get the number of files in each folder
+    folder_json = {}
+    for miki in miki_nodes:
+        if miki['folderName'] not in folder_json.keys():
+            folder_json[miki['folderName']] = {
+                "count": 1, "color": miki['color'], "folderId": miki['folderId']}
+        else:
+            folder_json[miki['folderName']]['count'] += 1
+
+    folder_json = dict(sorted(folder_json.items()))     # sort
+    
+    return folder_json
+
+
+def filter_ignored_mikis(mikis, MIKI_DIR_FOLDER_EXCLUDE):
+    
+    # filter out mikis where foldername is equal to passed in data
+    mikis_return = []
+    for i in range(len(mikis['nodes'])):
+        if mikis['nodes'][i]['folderId'] != MIKI_DIR_FOLDER_EXCLUDE:
+            mikis_return.append(mikis['nodes'][i])
+    mikis['nodes'] = mikis_return
+    
+    mikis_return = []
+    for i in range(len(mikis['links'])):
+        source = mikis['links'][i]['source'][0:3]
+        target = mikis['links'][i]['target'][0:3]
+        if source != MIKI_DIR_FOLDER_EXCLUDE and target != MIKI_DIR_FOLDER_EXCLUDE:
+            mikis_return.append(mikis['links'][i])
+    mikis['links'] = mikis_return
+
+    return mikis
 
 # this function will remove the wikilinks [[brackets]] so the yaml meta does not think it is a list-in-a-list
 def miki_reset_meta(mikis):
@@ -179,7 +198,7 @@ def miki_reset_meta_work(miki):
 
 
 
-# make an object with every page, it's metadata, and links
+# make an object with every page, its metadata and links
 def miki_get_graph(mikis):
     folder_id = 0
     color = ""

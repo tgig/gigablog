@@ -15,6 +15,7 @@ FLATPAGES_EXTENSION = ['.md', '.html']
 FLATPAGES_ROOT = 'content'
 POST_DIR = 'posts'
 MIKI_DIR = 'miki'
+MIKI_DIR_FOLDER_EXCLUDE = '115'
 FLATPAGES_HTML_RENDERER = utils.my_renderer
 
 app = Flask(__name__)
@@ -31,19 +32,10 @@ def not_found(e):
 
 @app.route("/")
 def index():
-    #return render_template('index.html')
-    # get all mikis to start with
     mikis_json = utils.get_mikis_json_for_all_pages(flatpages, MIKI_DIR)
-
-    # loop through and get the number of files in each folder
-    folder_json = {}
-    for miki in mikis_json['nodes']:
-        if miki['folderName'] not in folder_json.keys():
-            folder_json[miki['folderName']] = { "count": 1, "color": miki['color'], "folderId": miki['folderId'] }
-        else:
-            folder_json[miki['folderName']]['count'] += 1
-
-    folder_json = dict(sorted(folder_json.items()))     # sort
+    folder_json = utils.get_mikis_folders(mikis_json['nodes'])
+    # remove excluded folders from graph
+    mikis_json = utils.filter_ignored_mikis(mikis_json, MIKI_DIR_FOLDER_EXCLUDE)
     
     return render_template('index.html', mikis=mikis_json, folders=folder_json)
 
