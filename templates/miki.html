@@ -22,40 +22,59 @@
                 {{ miki.html|safe }}
             </div>
             <hr class="mb-5" />
-            {% if miki.meta.source %}
-                <div class="mb-5">
-                    <h5>Source:</h5>
-                    <ul>
-                    {% for source in miki.meta.source %}
-                        <li>
-                        {% if source.miki_id %}
-                            <a href="/miki/{{ source.miki_id|urlencode }}.html">{{ source.file_name }}</a>    
-                        {% else %}
-                            {{ source }}
+
+            <div class="container mb-5 text-secondary">
+                <div class="row">
+                    {% if miki.meta.source %}
+                        <div class="col">
+                            <h5>Source:</h5>
+                            <ul>
+                            {% for source in miki.meta.source %}
+                                <li>
+                                {% if source.miki_id %}
+                                    <a href="/miki/{{ source.miki_id|urlencode }}.html">{{ source.file_name }}</a>    
+                                {% else %}
+                                    {{ source }}
+                                {% endif %}
+                                </li>
+                            {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+
+                    {% if miki.meta.tags %}
+                        <div class="col">
+                            <h5>Tags:</h5>
+                            <ul>
+                            {% for tag in miki.meta.tags %}
+                                <li>{{ tag }}</li>
+                            {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            {% if mikis['links'] %}
+                <div class="mb-5 text-secondary">
+                    <h5>Graph:</h5>
+                    <ul style="font-size: .8em;">
+                    {% for m in mikis['links'] %}
+                        {% if miki.path.url == m.source or miki.path.url == m.target: %}
+                            <li>
+                            {% if miki.path.url != m.source %}
+                                <a href="{{m.source}}">{{m.source_name}}</a>
+                            {% else %}
+                                {{m.source_name}}
+                            {% endif %}
+                                >> 
+                            {% if miki.path.url != m.target %}
+                                <a href="{{m.target}}">{{m.target_name}}</a>
+                            {% else %}
+                                {{m.target_name}}
+                            {% endif %}
+                            </li>
                         {% endif %}
-                        </li>
-                    {% endfor %}
-                    </ul>
-                </div>
-            {% endif %}
-
-            {% if miki.meta.tags %}
-                <div class="mb-5">
-                    <h5>Tags:</h5>
-                    <ul>
-                    {% for tag in miki.meta.tags %}
-                        <li>{{ tag }}</li>
-                    {% endfor %}
-                    </ul>
-                </div>
-            {% endif %}
-
-            {% if miki.meta.relevant %}
-                <div class="mb-5">
-                    <h5>Relevant:</h5>
-                    <ul>
-                    {% for r in miki.meta.relevant %}
-                        <li><a href="/miki/{{ r.miki_id|urlencode }}.html">{{ r.file_name }}</a></li>
                     {% endfor %}
                     </ul>
                 </div>

@@ -109,8 +109,6 @@ def get_mikis_graph_for_miki_ids(miki_ids, mikis_json):
     keep_links_detail = [x['source'] for x in keep_links] + [x['target'] for x in keep_links]
     keep_links = [x for x in mikis_json['links'] if x['source'] in keep_links_detail and x['target'] in keep_links_detail]
 
-    #pdb.set_trace()
-
     # remove every link not in the list
     mikis_json['links'] = keep_links
 
@@ -262,12 +260,15 @@ def miki_get_graph(mikis):
 
         links = list(set(meta_links + body_links))              # merge w/o dups
 
+        #pdb.set_trace()
         for link in links:
             node_link_path = clean_node_path(link)
             
             graph_json['links'].append({
                 "source": node_path['miki_id'],
-                "target": node_link_path['miki_id']
+                "source_name": node_path['file_name'],
+                "target": node_link_path['miki_id'],
+                "target_name": link
             })
 
     #######################################
