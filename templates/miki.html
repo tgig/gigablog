@@ -63,13 +63,13 @@
                         {% if miki.path.url == m.source or miki.path.url == m.target: %}
                             <li>
                             {% if miki.path.url != m.source %}
-                                <a href="{{m.source}}">{{m.source_name}}</a>
+                                <a href="{{m.source}}.html">{{m.source_name}}</a>
                             {% else %}
                                 {{m.source_name}}
                             {% endif %}
                                 >> 
                             {% if miki.path.url != m.target %}
-                                <a href="{{m.target}}">{{m.target_name}}</a>
+                                <a href="{{m.target}}.html">{{m.target_name}}</a>
                             {% else %}
                                 {{m.target_name}}
                             {% endif %}
