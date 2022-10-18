@@ -11,6 +11,7 @@ relevant:
 - [[109.21 Productivity - 80-20 way to read a non-fiction book]]
 - [[109.29 Productivity - Rules for your focus sessions]]
 - [[109.30 Productivity - Focus on a small number of important goals at a time]]
+- [[109.46 Productivity - Napoleon wasted zero time]]
 
 # Productivity
 
