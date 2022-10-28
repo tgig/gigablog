@@ -1,6 +1,6 @@
 title: Learn the lesson, forget the pain
 desc: A golden rule for those who are always pushing to grow
-date: YYYY-MM-DD
+date: 2022-11-28
 type: essay
 
 # Learn the lesson, forget the pain
