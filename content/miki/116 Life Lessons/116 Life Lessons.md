@@ -98,11 +98,11 @@ relevant:
 - [[110.017 Startups - Know the difference between a lifestyle and a VC business]]
 - [[128.022 Management - Culture - The Rule of 3]]
 - [[133.008 Hiring - Only hire proven doers for top-level jobs]]
-- [[116.093 Life Lessons - Independent Thinking - Curiosity]]
+- [[126.015 Decision Making - Be curious]]
 - [[119.069 Communication - Empathy first, feelings second, needs last]]
 - [[116.095 Life Lessons - The ability to observe without evaluating]]
 - [[116.096 Life Lessons - When emotions override my higher consciousness]]
 - [[131.011 Leadership - The best leaders are problem solvers]]
 - [[116.098 Life Lessons - Distinguish between what I feel and what I think others feel]]
-- [[116.099 Life Lessons - Stanford - The Questions]]
+- [[126.013 Decision Making - Stanford - The Questions]]
 
