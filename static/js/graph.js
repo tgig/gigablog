@@ -1,5 +1,9 @@
 
 var GraphRenderer = function(svgId, graph, svgWidth, svgHeight, folderInfoDiv, fileInfoDiv) {
+    // No-op on mobile / prohibitively small screens
+    if (window.innerWidth < 420) {
+        return;
+    }
 
     document.getElementById(svgId).setAttribute('height', svgHeight);
     document.getElementById(svgId).setAttribute("width", svgWidth);
