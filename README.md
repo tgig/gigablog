@@ -1,8 +1,10 @@
 # Moved to a new site
 
-I wrote this site from scratch in Ruby on Rails. The new repo is located here: https://github.com/tgig/GBlog
-
 This repo is no longer maintained.
+
+The new repo is located here: https://github.com/tgig/GBlog
+
+---
 
 # Gig-a-blog
 
